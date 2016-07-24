@@ -20,10 +20,6 @@ public class IssueBean {
                 '}';
     }
 
-    public static Logger getLogger() {
-        return Utils.logger;
-    }
-
     public String getProjectIdentifier() {
         return projectIdentifier;
     }

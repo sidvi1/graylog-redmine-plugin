@@ -13,7 +13,7 @@ import org.graylog2.plugin.streams.Stream;
 import ru.sidvi.graylog.api.IssueBean;
 import ru.sidvi.graylog.api.RedmineClient;
 import ru.sidvi.graylog.api.RestApiClient;
-import ru.sidvi.graylog.api.Utils;
+import ru.sidvi.graylog.template.TemplateBuilder;
 
 import java.util.Map;
 
@@ -23,8 +23,8 @@ public class RedmineAlarmCallback implements AlarmCallback {
     private static final String PROJECT_IDENTIFIER = "r_project_identifier";
     private static final String ISSUE_TYPE = "r_issue_type";
     private static final String PRIORITY = "r_priority";
-//    private static final String GRAYLOG_URL = "r_graylog_url";
     private Configuration configuration;
+    private TemplateBuilder templateBuilder; //TODO: initialize through
 
     @Override
     public void initialize(Configuration config) throws AlarmCallbackConfigurationException {
@@ -36,57 +36,60 @@ public class RedmineAlarmCallback implements AlarmCallback {
         String serverUrl = configuration.getString(SERVER_URL);
         String apiKey = configuration.getString(API_KEY);
 
-        IssueBean issue = fillIssueFromForm();
+        IssueBean issue = fillIssueFromForm(stream, result);
         RedmineClient client = new RestApiClient(serverUrl, apiKey);
         client.create(issue);
     }
 
-    private IssueBean fillIssueFromForm() {
+    private IssueBean fillIssueFromForm(Stream stream, AlertCondition.CheckResult result) {
         IssueBean issue = new IssueBean();
         issue.setProjectIdentifier(configuration.getString(PROJECT_IDENTIFIER));
         issue.setType(configuration.getString(ISSUE_TYPE));
         issue.setPriority(configuration.getString(PRIORITY));
-        issue.setDescription(buildDescription());
-        issue.setTitle(buildTitle());
+        issue.setDescription(templateBuilder.buildBody(stream, result));
+        issue.setTitle(templateBuilder.buildSubject(stream, result));
         return issue;
-    }
-
-    private String buildTitle() {
-        return "TITLE"; //TODO: add same as description
-    }
-
-    private String buildDescription() {
-        return "DESCRIPTION TODO: \n"; //TODO: add description from template. using java template engine
     }
 
     @Override
     public ConfigurationRequest getRequestedConfiguration() {
         final ConfigurationRequest configurationRequest = new ConfigurationRequest();
 
-        configurationRequest.addField (new TextField(
+        configurationRequest.addField(new TextField(
                 SERVER_URL, "Redmine url", "", "Url to Redmine server.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
-        configurationRequest.addField (new TextField(
+        configurationRequest.addField(new TextField(
                 API_KEY, "Redmine api key", "", "Api key for Redmine server.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
-        configurationRequest.addField (new TextField (
+        configurationRequest.addField(new TextField(
                 PROJECT_IDENTIFIER, "Redmine project identifier", "", "Identifier for project under which the issue will be created.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
-        configurationRequest.addField (new TextField (
-                ISSUE_TYPE, "Redmine issue Type", "Bug", "Type of issue.",
+        configurationRequest.addField(new TextField(
+                ISSUE_TYPE, "Redmine issue tracker", "Bug", "Tracker for issue.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
-        configurationRequest.addField (new TextField (
+        configurationRequest.addField(new TextField(
                 PRIORITY, "Redmine issue priority", "Minor", "Priority of the issue.",
                 ConfigurationField.Optional.OPTIONAL));
 
-//        configurationRequest.addField (new TextField (
-//                GRAYLOG_URL, "Graylog URL", null, "URL to your Graylog web interface. Used to build links in alarm notification.",
-//                ConfigurationField.Optional.NOT_OPTIONAL));
+        configurationRequest.addField(new TextField(
+                TemplateBuilder.SUBJECT,
+                "Redmine task subject",
+                TemplateBuilder.SUBJECT_TEMPLATE,
+                "The template to generate subject from.",
+                ConfigurationField.Optional.NOT_OPTIONAL,
+                TextField.Attribute.TEXTAREA
+        ));
 
+        configurationRequest.addField(new TextField("body",
+                TemplateBuilder.BODY,
+                TemplateBuilder.BODY_TEMPLATE,
+                "The template to generate the description from",
+                ConfigurationField.Optional.NOT_OPTIONAL,
+                TextField.Attribute.TEXTAREA));
 
         return configurationRequest;
     }

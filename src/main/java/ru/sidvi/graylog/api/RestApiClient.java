@@ -3,10 +3,15 @@ package ru.sidvi.graylog.api;
 import com.google.common.collect.Lists;
 import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class RestApiClient implements RedmineClient {
+
+    private final Logger logger = LoggerFactory.getLogger(IssueBean.class);
+
     private final String serverUrl;
     private String apiKey;
 
@@ -28,7 +33,7 @@ public class RestApiClient implements RedmineClient {
                 mgr.getIssueManager().createIssue(issue);
             }
         } catch (RedmineException e) {
-            e.printStackTrace(); //TODO: replace with right one!
+            logger.error("", e);
         }
     }
 
@@ -61,7 +66,7 @@ public class RestApiClient implements RedmineClient {
             }
             return last.getId();
         } catch (RedmineException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return 0;
