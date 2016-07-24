@@ -10,7 +10,7 @@ import org.graylog2.plugin.configuration.ConfigurationRequest;
 import org.graylog2.plugin.configuration.fields.ConfigurationField;
 import org.graylog2.plugin.configuration.fields.TextField;
 import org.graylog2.plugin.streams.Stream;
-import ru.sidvi.graylog.api.IssueBean;
+import ru.sidvi.graylog.api.IssueDTO;
 import ru.sidvi.graylog.api.RedmineClient;
 import ru.sidvi.graylog.api.RestApiClient;
 import ru.sidvi.graylog.template.TemplateBuilder;
@@ -36,13 +36,13 @@ public class RedmineAlarmCallback implements AlarmCallback {
         String serverUrl = configuration.getString(SERVER_URL);
         String apiKey = configuration.getString(API_KEY);
 
-        IssueBean issue = fillIssueFromForm(stream, result);
+        IssueDTO issue = fillIssueFromForm(stream, result);
         RedmineClient client = new RestApiClient(serverUrl, apiKey);
         client.create(issue);
     }
 
-    private IssueBean fillIssueFromForm(Stream stream, AlertCondition.CheckResult result) {
-        IssueBean issue = new IssueBean();
+    private IssueDTO fillIssueFromForm(Stream stream, AlertCondition.CheckResult result) {
+        IssueDTO issue = new IssueDTO();
         issue.setProjectIdentifier(configuration.getString(PROJECT_IDENTIFIER));
         issue.setType(configuration.getString(ISSUE_TYPE));
         issue.setPriority(configuration.getString(PRIORITY));

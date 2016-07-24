@@ -1,5 +1,5 @@
 package ru.sidvi.graylog.api;
 
 public interface RedmineClient {
-    void create(IssueBean issue);
+    void create(IssueDTO issue);
 }

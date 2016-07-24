@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Utils {
     public static final String MD5_PATTERN = ">>MD5:";
-    static final Logger logger = LoggerFactory.getLogger(IssueBean.class);
+    static final Logger logger = LoggerFactory.getLogger(IssueDTO.class);
     public static final int MD5_LEN = 32;
 
     public static String extractMD5(String description) {

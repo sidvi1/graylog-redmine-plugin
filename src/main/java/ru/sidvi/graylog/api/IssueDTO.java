@@ -2,7 +2,7 @@ package ru.sidvi.graylog.api;
 
 import org.slf4j.Logger;
 
-public class IssueBean {
+public class IssueDTO {
 
     public String title;
     public String description;
@@ -11,7 +11,7 @@ public class IssueBean {
     public String priority;
     @Override
     public String toString() {
-        return "IssueBean{" +
+        return "IssueDTO{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", projectIdentifier='" + projectIdentifier + '\'' +

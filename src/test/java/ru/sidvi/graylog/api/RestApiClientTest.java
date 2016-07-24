@@ -121,7 +121,7 @@ public class RestApiClientTest {
 
         //when
         RedmineClient client = new RestApiClient(URI, API_ACCESS_KEY);
-        IssueBean issue = new IssueBean();
+        IssueDTO issue = new IssueDTO();
         issue.setProjectIdentifier("test1111");
         issue.setDescription("Description.");
         issue.setTitle("First issue");
@@ -176,7 +176,7 @@ public class RestApiClientTest {
 
         //when
         RedmineClient client = new RestApiClient(URI, API_ACCESS_KEY);
-        IssueBean issue = new IssueBean();
+        IssueDTO issue = new IssueDTO();
         issue.setProjectIdentifier("test1111");
         issue.setDescription("Description.");
         issue.setTitle("First issue");
