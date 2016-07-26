@@ -6,51 +6,46 @@ import com.taskadapter.redmineapi.bean.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RestApiClient implements RedmineClient {
+class RestApiClient implements RedmineClient {
 
     private final Logger logger = LoggerFactory.getLogger(IssueDTO.class);
 
-    private final String serverUrl;
-    private String apiKey;
+    private IssueManager issueManager;
+    private ProjectManager projectManager;
 
     public RestApiClient(String serverUrl, String apiKey) {
-        this.serverUrl = serverUrl;
-        this.apiKey = apiKey;
+        RedmineManager manager = RedmineManagerFactory.createWithApiKey(serverUrl, apiKey);
+        issueManager = manager.getIssueManager();
+        projectManager = manager.getProjectManager();
     }
 
     @Override
     public void create(IssueDTO holder) {
-
         try {
-            RedmineManager mgr = RedmineManagerFactory.createWithApiKey(serverUrl, apiKey);
-            IssueManager issueManager = mgr.getIssueManager();
-            ProjectManager projectManager = mgr.getProjectManager();
-
-            List<Issue> issuesInProject = issueManager.getIssues(holder.getProjectIdentifier(), null);
-            String md5 = Utils.calculateMD5(holder.toString());
-            if (!containsMD5(issuesInProject, md5)) {
-                Integer priority = getPriority(issueManager.getIssuePriorities(), IssuePriorityFactory.create(0), holder);
-                Project project = projectManager.getProjectByKey(holder.getProjectIdentifier());
-                Issue issue = fillIssue(holder, project, priority);
-                issue.setDescription(Utils.appendMD5(md5, issue.getDescription()));
-                issueManager.createIssue(issue);
-            }
+            Integer priority = getPriority(issueManager.getIssuePriorities(), IssuePriorityFactory.create(0), holder);
+            Project project = projectManager.getProjectByKey(holder.getProjectIdentifier());
+            Issue issue = fillIssue(holder, project, priority);
+            issueManager.createIssue(issue);
         } catch (RedmineException e) {
             logger.error("", e);
         }
     }
 
-    private boolean containsMD5(List<Issue> issues, String md5) {
-        for (Issue i : issues) {
-            String o = Utils.extractMD5(i.getDescription());
-            if (md5.equals(o)) {
-                return true;
-            }
+    @Override
+    public List<IssueDTO> getAll(String projectIdentifier) {
+        List<IssueDTO> issueDTOs = new ArrayList<>();
+        try {
+            List<Issue> issues = issueManager.getIssues(projectIdentifier, null);
+            //todo:!!! add transform
+        } catch (RedmineException e) {
+            e.printStackTrace();
         }
-        return false;
+        return issueDTOs;
     }
+
 
     private Issue fillIssue(IssueDTO holder, Project project, Integer priority) throws RedmineException {
         Issue i = IssueFactory.create(project.getId(), holder.getTitle());
@@ -81,5 +76,4 @@ public class RestApiClient implements RedmineClient {
         }
         return defaultTracker;
     }
-
 }

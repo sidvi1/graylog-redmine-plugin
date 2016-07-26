@@ -1,5 +1,6 @@
 package ru.sidvi.graylog;
 
+import org.graylog2.configuration.EmailConfiguration;
 import org.graylog2.plugin.alarms.AlertCondition;
 import org.graylog2.plugin.alarms.callbacks.AlarmCallback;
 import org.graylog2.plugin.alarms.callbacks.AlarmCallbackConfigurationException;
@@ -10,12 +11,16 @@ import org.graylog2.plugin.configuration.ConfigurationRequest;
 import org.graylog2.plugin.configuration.fields.ConfigurationField;
 import org.graylog2.plugin.configuration.fields.TextField;
 import org.graylog2.plugin.streams.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.api.IssueDTO;
-import ru.sidvi.graylog.api.RedmineClient;
-import ru.sidvi.graylog.api.RestApiClient;
-import ru.sidvi.graylog.template.TemplateBuilder;
+import ru.sidvi.graylog.template.IssueTemplater;
 
+import javax.inject.Inject;
+import java.net.URI;
 import java.util.Map;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class RedmineAlarmCallback implements AlarmCallback {
     private static final String SERVER_URL = "r_server_url";
@@ -24,7 +29,18 @@ public class RedmineAlarmCallback implements AlarmCallback {
     private static final String ISSUE_TYPE = "r_issue_type";
     private static final String PRIORITY = "r_priority";
     private Configuration configuration;
-    private TemplateBuilder templateBuilder; //TODO: initialize through
+    private Redmine readmine;
+    private IssueTemplater templater;
+    private EmailConfiguration emailConfig;
+
+    private final Logger logger = LoggerFactory.getLogger(RedmineAlarmCallback.class);
+
+    @Inject
+    public RedmineAlarmCallback(Redmine readmine, IssueTemplater templater, EmailConfiguration emailConfig) {
+        this.readmine = readmine;
+        this.templater = templater;
+        this.emailConfig = emailConfig;
+    }
 
     @Override
     public void initialize(Configuration config) throws AlarmCallbackConfigurationException {
@@ -36,19 +52,28 @@ public class RedmineAlarmCallback implements AlarmCallback {
         String serverUrl = configuration.getString(SERVER_URL);
         String apiKey = configuration.getString(API_KEY);
 
-        IssueDTO issue = fillIssueFromForm(stream, result);
-        RedmineClient client = new RestApiClient(serverUrl, apiKey);
-        client.create(issue);
+        IssueDTO issue = fillIssueFromForm(new DataExtractor(stream, result, getBaseUri()));
+
+        readmine.saveIfNonExists(issue,serverUrl, apiKey);
     }
 
-    private IssueDTO fillIssueFromForm(Stream stream, AlertCondition.CheckResult result) {
+    private IssueDTO fillIssueFromForm(DataExtractor extractor) {
         IssueDTO issue = new IssueDTO();
         issue.setProjectIdentifier(configuration.getString(PROJECT_IDENTIFIER));
         issue.setType(configuration.getString(ISSUE_TYPE));
         issue.setPriority(configuration.getString(PRIORITY));
-        issue.setDescription(templateBuilder.buildBody(stream, result));
-        issue.setTitle(templateBuilder.buildSubject(stream, result));
+        issue.setDescription(templater.buildBody(extractor));
+        issue.setTitle(templater.buildSubject(extractor));
         return issue;
+    }
+
+    private URI getBaseUri() {
+        URI webInterfaceUri = emailConfig.getWebInterfaceUri();
+        // Return an informational message if the web interface URL hasn't been set
+        if (webInterfaceUri == null || isNullOrEmpty(webInterfaceUri.getHost())) {
+            logger.warn("Please configure 'transport_email_web_interface_url' in your Graylog configuration file.");
+        }
+        return webInterfaceUri;
     }
 
     @Override
@@ -56,37 +81,37 @@ public class RedmineAlarmCallback implements AlarmCallback {
         final ConfigurationRequest configurationRequest = new ConfigurationRequest();
 
         configurationRequest.addField(new TextField(
-                SERVER_URL, "Redmine url", "", "Url to Redmine server.",
+                SERVER_URL, "RedmineClientFactory url", "", "Url to RedmineClientFactory server.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                API_KEY, "Redmine api key", "", "Api key for Redmine server.",
+                API_KEY, "RedmineClientFactory api key", "", "Api key for RedmineClientFactory server.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                PROJECT_IDENTIFIER, "Redmine project identifier", "", "Identifier for project under which the issue will be created.",
+                PROJECT_IDENTIFIER, "RedmineClientFactory project identifier", "", "Identifier for project under which the issue will be created.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                ISSUE_TYPE, "Redmine issue tracker", "Bug", "Tracker for issue.",
+                ISSUE_TYPE, "RedmineClientFactory issue tracker", "Bug", "Tracker for issue.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                PRIORITY, "Redmine issue priority", "Minor", "Priority of the issue.",
+                PRIORITY, "RedmineClientFactory issue priority", "Minor", "Priority of the issue.",
                 ConfigurationField.Optional.OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                TemplateBuilder.SUBJECT,
-                "Redmine task subject",
-                TemplateBuilder.SUBJECT_TEMPLATE,
+                IssueTemplater.SUBJECT,
+                "RedmineClientFactory task subject",
+                IssueTemplater.SUBJECT_TEMPLATE,
                 "The template to generate subject from.",
                 ConfigurationField.Optional.NOT_OPTIONAL,
                 TextField.Attribute.TEXTAREA
         ));
 
         configurationRequest.addField(new TextField("body",
-                TemplateBuilder.BODY,
-                TemplateBuilder.BODY_TEMPLATE,
+                IssueTemplater.BODY,
+                IssueTemplater.BODY_TEMPLATE,
                 "The template to generate the description from",
                 ConfigurationField.Optional.NOT_OPTIONAL,
                 TextField.Attribute.TEXTAREA));
@@ -96,7 +121,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
     @Override
     public String getName() {
-        return "Graylog Redmine integration plugin";
+        return "Graylog RedmineClientFactory integration plugin";
     }
 
     @Override

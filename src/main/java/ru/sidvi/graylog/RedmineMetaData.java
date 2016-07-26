@@ -16,7 +16,7 @@ public class RedmineMetaData implements PluginMetaData {
 
     @Override
     public String getName() {
-        return "Redmine Alarmcallback plugin";
+        return "RedmineClientFactory Alarmcallback plugin";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class RedmineMetaData implements PluginMetaData {
 
     @Override
     public String getDescription() {
-        return "Graylog stream integration plugin for Redmine.";
+        return "Graylog stream integration plugin for RedmineClientFactory.";
     }
 
     @Override

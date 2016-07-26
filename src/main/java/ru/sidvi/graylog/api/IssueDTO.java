@@ -1,14 +1,26 @@
 package ru.sidvi.graylog.api;
 
-import org.slf4j.Logger;
+import com.google.common.base.Objects;
 
 public class IssueDTO {
 
-    public String title;
-    public String description;
-    public String projectIdentifier;
-    public String type;
-    public String priority;
+    private String title;
+    private String description;
+    private String projectIdentifier;
+    private String type;
+    private String priority;
+
+    public IssueDTO(IssueDTO issue) {
+        title = issue.getTitle();
+        description = issue.getDescription();
+        projectIdentifier = issue.getProjectIdentifier();
+        type = issue.getType();
+        priority = issue.getPriority();
+    }
+
+    public IssueDTO() {
+    }
+
     @Override
     public String toString() {
         return "IssueDTO{" +
@@ -58,5 +70,22 @@ public class IssueDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IssueDTO issueDTO = (IssueDTO) o;
+        return Objects.equal(title, issueDTO.title) &&
+                Objects.equal(description, issueDTO.description) &&
+                Objects.equal(projectIdentifier, issueDTO.projectIdentifier) &&
+                Objects.equal(type, issueDTO.type) &&
+                Objects.equal(priority, issueDTO.priority);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(title, description, projectIdentifier, type, priority);
     }
 }
