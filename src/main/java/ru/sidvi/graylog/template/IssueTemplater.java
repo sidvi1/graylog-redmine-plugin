@@ -31,33 +31,26 @@ public class IssueTemplater {
             "${end}" +
             "\n";
     public static final String SUBJECT_TEMPLATE = "Graylog alert for stream: ${stream.title}: ${check_result.resultDescription}";
-    public static final String SUBJECT = "r_subject";
-    public static final String BODY = "r_body";
 
     private TemplateEngineAdapter engine;
-    private Configuration configuration;
 
     @Inject
-    public IssueTemplater(TemplateEngineAdapter builder, Configuration configuration) {
+    public IssueTemplater(TemplateEngineAdapter builder) {
         this.engine = builder;
-        this.configuration = configuration;
     }
 
-    public String buildSubject(DataExtractor extractor) {
-        String key = SUBJECT;
-        return engine.processTemplate(extractor, fromConfigOrDefault(key, SUBJECT_TEMPLATE));
+    public String buildSubject(DataExtractor extractor,String value) {
+        return engine.processTemplate(extractor, defaultIfEmpty(value, SUBJECT_TEMPLATE));
     }
 
-    public String buildBody(DataExtractor extractor) {
-        String key = BODY;
-        return engine.processTemplate(extractor, fromConfigOrDefault(key, BODY_TEMPLATE));
+    public String buildBody(DataExtractor extractor, String value) {
+        return engine.processTemplate(extractor, defaultIfEmpty(value,BODY_TEMPLATE));
     }
 
-    private String fromConfigOrDefault(String key, String defaultTemplate) {
-        if (configuration != null && configuration.getString(key) != null) {
-            defaultTemplate = configuration.getString(key);
+    private String defaultIfEmpty(String value, String defaultValue) {
+        if(value != null && value.length() != 0) {
+            return value;
         }
-        return defaultTemplate;
+        return defaultValue;
     }
-
 }

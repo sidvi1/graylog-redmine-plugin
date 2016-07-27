@@ -3,10 +3,12 @@ package ru.sidvi.graylog.hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Singleton;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Singleton
 public class MD5Hash implements Hash {
 
     private final Logger logger = LoggerFactory.getLogger(MD5Hash.class);

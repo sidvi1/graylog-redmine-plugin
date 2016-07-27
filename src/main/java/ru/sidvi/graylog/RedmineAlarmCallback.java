@@ -28,6 +28,8 @@ public class RedmineAlarmCallback implements AlarmCallback {
     private static final String PROJECT_IDENTIFIER = "r_project_identifier";
     private static final String ISSUE_TYPE = "r_issue_type";
     private static final String PRIORITY = "r_priority";
+    private static final String BODY = "r_body";
+    private static final String SUBJECT = "r_subject";
     private Configuration configuration;
     private Redmine readmine;
     private IssueTemplater templater;
@@ -62,8 +64,8 @@ public class RedmineAlarmCallback implements AlarmCallback {
         issue.setProjectIdentifier(configuration.getString(PROJECT_IDENTIFIER));
         issue.setType(configuration.getString(ISSUE_TYPE));
         issue.setPriority(configuration.getString(PRIORITY));
-        issue.setDescription(templater.buildBody(extractor));
-        issue.setTitle(templater.buildSubject(extractor));
+        issue.setDescription(templater.buildBody(extractor, configuration.getString(BODY)));
+        issue.setTitle(templater.buildSubject(extractor, configuration.getString(SUBJECT)));
         return issue;
     }
 
@@ -81,36 +83,37 @@ public class RedmineAlarmCallback implements AlarmCallback {
         final ConfigurationRequest configurationRequest = new ConfigurationRequest();
 
         configurationRequest.addField(new TextField(
-                SERVER_URL, "RedmineClientFactory url", "", "Url to RedmineClientFactory server.",
+                SERVER_URL, "Server url", "", "Url to Redmine server.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                API_KEY, "RedmineClientFactory api key", "", "Api key for RedmineClientFactory server.",
+                API_KEY, "Api key", "", "Api key for Redmine server.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                PROJECT_IDENTIFIER, "RedmineClientFactory project identifier", "", "Identifier for project under which the issue will be created.",
+                PROJECT_IDENTIFIER, "Project identifier", "", "Identifier for project under which the issue will be created.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                ISSUE_TYPE, "RedmineClientFactory issue tracker", "Bug", "Tracker for issue.",
+                ISSUE_TYPE, "Issue tracker", "Bug", "Tracker for issue.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                PRIORITY, "RedmineClientFactory issue priority", "Minor", "Priority of the issue.",
+                PRIORITY, "Issue priority", "Minor", "Priority of the issue.",
                 ConfigurationField.Optional.OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                IssueTemplater.SUBJECT,
-                "RedmineClientFactory task subject",
+                SUBJECT,
+                "Task subject",
                 IssueTemplater.SUBJECT_TEMPLATE,
                 "The template to generate subject from.",
                 ConfigurationField.Optional.NOT_OPTIONAL,
                 TextField.Attribute.TEXTAREA
         ));
 
-        configurationRequest.addField(new TextField("body",
-                IssueTemplater.BODY,
+        configurationRequest.addField(new TextField(
+                BODY,
+                "Task description tempate",
                 IssueTemplater.BODY_TEMPLATE,
                 "The template to generate the description from",
                 ConfigurationField.Optional.NOT_OPTIONAL,
@@ -121,7 +124,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
     @Override
     public String getName() {
-        return "Graylog RedmineClientFactory integration plugin";
+        return "Redmine alarmcallback";
     }
 
     @Override
