@@ -1,6 +1,5 @@
 package ru.sidvi.graylog.template;
 
-import org.graylog2.plugin.configuration.Configuration;
 import ru.sidvi.graylog.DataExtractor;
 
 import javax.inject.Inject;
@@ -35,20 +34,20 @@ public class IssueTemplater {
     private TemplateEngineAdapter engine;
 
     @Inject
-    public IssueTemplater(TemplateEngineAdapter builder) {
-        this.engine = builder;
+    public IssueTemplater(TemplateEngineAdapter engine) {
+        this.engine = engine;
     }
 
-    public String buildSubject(DataExtractor extractor,String value) {
+    public String buildSubject(DataExtractor extractor, String value) {
         return engine.processTemplate(extractor, defaultIfEmpty(value, SUBJECT_TEMPLATE));
     }
 
     public String buildBody(DataExtractor extractor, String value) {
-        return engine.processTemplate(extractor, defaultIfEmpty(value,BODY_TEMPLATE));
+        return engine.processTemplate(extractor, defaultIfEmpty(value, BODY_TEMPLATE));
     }
 
     private String defaultIfEmpty(String value, String defaultValue) {
-        if(value != null && value.length() != 0) {
+        if (value != null && value.length() != 0) {
             return value;
         }
         return defaultValue;

@@ -32,7 +32,7 @@ public class MD5Hash implements Hash {
 
     @Override
     public String append(String hash, String value) {
-        return value + BEGIN_MARKER + hash + END_MARKER ;
+        return value + BEGIN_MARKER + hash + END_MARKER;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MD5Hash implements Hash {
         if (value.contains(BEGIN_MARKER)) {
             int begin = value.indexOf(BEGIN_MARKER);
             int end = value.indexOf(END_MARKER);
-            return value.substring(0, begin) + value.substring(end + END_MARKER.length(), value.length() );
+            return value.substring(0, begin) + value.substring(end + END_MARKER.length(), value.length());
         }
         return value;
     }

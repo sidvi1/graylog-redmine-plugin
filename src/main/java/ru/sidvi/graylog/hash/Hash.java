@@ -1,7 +1,7 @@
 package ru.sidvi.graylog.hash;
 
 /**
- *  Manage hash on strings.
+ * Manage hash on strings.
  */
 public interface Hash {
     String BEGIN_MARKER = "\nMARKER>>\n";

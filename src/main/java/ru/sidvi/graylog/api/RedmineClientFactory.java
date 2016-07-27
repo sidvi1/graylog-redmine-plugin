@@ -7,6 +7,6 @@ package ru.sidvi.graylog.api;
 public class RedmineClientFactory {
 
     public RedmineClient create(String serverUrl, String apiKey) {
-        return new RestApiClient(serverUrl,apiKey);
+        return new RestApiClient(serverUrl, apiKey);
     }
 }

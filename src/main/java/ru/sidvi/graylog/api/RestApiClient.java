@@ -39,7 +39,14 @@ class RestApiClient implements RedmineClient {
         List<IssueDTO> issueDTOs = new ArrayList<>();
         try {
             List<Issue> issues = issueManager.getIssues(projectIdentifier, null);
-            //todo:!!! add transform
+            for (Issue fromServer : issues) {
+                IssueDTO issue = new IssueDTO();
+                issue.setTitle(fromServer.getSubject());
+                issue.setDescription(fromServer.getDescription());
+                issue.setProjectIdentifier(projectIdentifier);
+                issue.setPriority(fromServer.getPriorityText());
+                issue.setType(fromServer.getTracker().getName());
+            }
         } catch (RedmineException e) {
             e.printStackTrace();
         }

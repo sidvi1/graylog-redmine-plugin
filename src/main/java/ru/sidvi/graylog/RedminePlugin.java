@@ -14,7 +14,7 @@ public class RedminePlugin implements Plugin {
     }
 
     @Override
-    public Collection<PluginModule> modules () {
+    public Collection<PluginModule> modules() {
         return Collections.<PluginModule>singletonList(new RedmineModule());
     }
 }

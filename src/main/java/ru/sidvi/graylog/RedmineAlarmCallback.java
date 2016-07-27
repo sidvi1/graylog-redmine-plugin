@@ -30,12 +30,11 @@ public class RedmineAlarmCallback implements AlarmCallback {
     private static final String PRIORITY = "r_priority";
     private static final String BODY = "r_body";
     private static final String SUBJECT = "r_subject";
+    private final Logger logger = LoggerFactory.getLogger(RedmineAlarmCallback.class);
     private Configuration configuration;
     private Redmine readmine;
     private IssueTemplater templater;
     private EmailConfiguration emailConfig;
-
-    private final Logger logger = LoggerFactory.getLogger(RedmineAlarmCallback.class);
 
     @Inject
     public RedmineAlarmCallback(Redmine readmine, IssueTemplater templater, EmailConfiguration emailConfig) {
@@ -56,7 +55,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
         IssueDTO issue = fillIssueFromForm(new DataExtractor(stream, result, getBaseUri()));
 
-        readmine.saveIfNonExists(issue,serverUrl, apiKey);
+        readmine.saveIfNonExists(issue, serverUrl, apiKey);
     }
 
     private IssueDTO fillIssueFromForm(DataExtractor extractor) {
@@ -124,7 +123,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
     @Override
     public String getName() {
-        return "Redmine alarmcallback";
+        return "Redmine Alarm Callback";
     }
 
     @Override

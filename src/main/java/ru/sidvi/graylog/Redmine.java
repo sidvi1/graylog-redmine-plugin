@@ -20,7 +20,7 @@ public class Redmine {
     }
 
     public void saveIfNonExists(IssueDTO issue, String serverUrl, String apiKey) {
-        RedmineClient client= factory.create(serverUrl, apiKey);
+        RedmineClient client = factory.create(serverUrl, apiKey);
 
         String projectIdentifier = issue.getProjectIdentifier();
         List<IssueDTO> projectIssues = client.getAll(projectIdentifier);
