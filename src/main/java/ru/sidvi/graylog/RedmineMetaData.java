@@ -16,7 +16,7 @@ public class RedmineMetaData implements PluginMetaData {
 
     @Override
     public String getName() {
-        return "RedmineClientFactory Alarmcallback plugin";
+        return "Redmine Alarmcallback plugin";
     }
 
     @Override
@@ -31,7 +31,7 @@ public class RedmineMetaData implements PluginMetaData {
 
     @Override
     public Version getVersion() {
-        return Version.from(1, 0, 0);
+        return new Version(1, 0, 0);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RedmineMetaData implements PluginMetaData {
 
     @Override
     public Version getRequiredVersion() {
-        return Version.from(2, 0, 0);
+        return new Version(2, 0, 0);
     }
 
     @Override

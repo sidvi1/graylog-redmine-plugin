@@ -14,11 +14,11 @@ public class RedmineModule extends PluginModule {
     @Override
     protected void configure() {
         bind(Hash.class).to(MD5Hash.class).asEagerSingleton();
-        bind(RedmineClientFactory.class).to(RedmineClientFactory.class);
-        bind(IssueMarker.class).to(IssueMarker.class);
-        bind(IssueTemplater.class).to(IssueTemplater.class);
-        bind(TemplateEngineAdapter.class).to(TemplateEngineAdapter.class);
-        bind(Redmine.class).to(Redmine.class);
+        bind(RedmineClientFactory.class);
+        bind(IssueMarker.class);
+        bind(IssueTemplater.class);
+        bind(TemplateEngineAdapter.class);
+        bind(Redmine.class);
 
         addAlarmCallback(RedmineAlarmCallback.class);
     }
