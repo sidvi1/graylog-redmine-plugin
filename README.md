@@ -1,7 +1,8 @@
 # Redmine Plugin for Graylog
 
 [![Build Status](https://travis-ci.org/sidvi1/graylog-redmine-plugin.svg?branch=master)](https://travis-ci.org/sidvi1/graylog-redmine-plugin)
-[![Coverage Status](https://coveralls.io/repos/github/sidvi1/graylog-redmine-plugin/badge.svg)](https://coveralls.io/github/sidvi1/graylog-redmine-plugin)
+[![Coverage Status](https://coveralls.io/repos/github/sidvi1/graylog-redmine-plugin/badge.svg?branch=master)](https://coveralls.io/github/sidvi1/graylog-redmine-plugin?branch=master)
+
 
 Graylog alarm callback plugin for Redmine issue tracker.
 
