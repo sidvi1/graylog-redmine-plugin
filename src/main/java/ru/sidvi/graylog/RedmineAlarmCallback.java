@@ -95,8 +95,24 @@ public class RedmineAlarmCallback implements AlarmCallback {
                 ConfigurationField.Optional.NOT_OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                PROJECT_IDENTIFIER, "Project identifier", "", "Identifier for project under which the issue will be created.",
+                PROJECT_IDENTIFIER, "Project identifier", "", "Identifier for project under which the swill be created.",
                 ConfigurationField.Optional.NOT_OPTIONAL));
+
+        configurationRequest.addField(new TextField(
+                SUBJECT,
+                "Issue subject template",
+                IssueTemplater.SUBJECT_TEMPLATE,
+                "The template to generate subject from.",
+                ConfigurationField.Optional.NOT_OPTIONAL
+        ));
+
+        configurationRequest.addField(new TextField(
+                BODY,
+                "Issue description tempate",
+                IssueTemplater.BODY_TEMPLATE,
+                "The template to generate the description from.",
+                ConfigurationField.Optional.NOT_OPTIONAL,
+                TextField.Attribute.TEXTAREA));
 
         configurationRequest.addField(new TextField(
                 ISSUE_TYPE, "Issue tracker", "Bug", "Tracker for issue.",
@@ -106,22 +122,6 @@ public class RedmineAlarmCallback implements AlarmCallback {
                 PRIORITY, "Issue priority", "Minor", "Priority of the issue.",
                 ConfigurationField.Optional.OPTIONAL));
 
-        configurationRequest.addField(new TextField(
-                SUBJECT,
-                "Issue subject",
-                IssueTemplater.SUBJECT_TEMPLATE,
-                "The template to generate subject from.",
-                ConfigurationField.Optional.NOT_OPTIONAL,
-                TextField.Attribute.TEXTAREA
-        ));
-
-        configurationRequest.addField(new TextField(
-                BODY,
-                "Issue description tempate",
-                IssueTemplater.BODY_TEMPLATE,
-                "The template to generate the description from",
-                ConfigurationField.Optional.NOT_OPTIONAL,
-                TextField.Attribute.TEXTAREA));
 
         return configurationRequest;
     }
