@@ -136,10 +136,6 @@ public class RestApiClientTest {
 
         //then
         MOCK_SERVER.verify(
-
-                request()
-                        .withMethod("GET")
-                        .withPath("/issues.json"),
                 request()
                         .withMethod("GET")
                         .withPath("/enumerations/issue_priorities.json"),
@@ -149,7 +145,7 @@ public class RestApiClientTest {
                 request()
                         .withMethod("POST")
                         .withPath("/issues.json")
-                        .withBody(new StringBody("{\"issue\":{\"subject\":\"First issue\",\"priority_id\":3,\"project_id\":40667,\"start_date\":null,\"description\":\"Description.\\n>>MD5:861f1968a657663fe3c32e6af31afa68\\n\"}}"))
+                        .withBody(new StringBody("{\"issue\":{\"subject\":\"First issue\",\"priority_id\":3,\"project_id\":40667,\"start_date\":null,\"description\":\"Description.\"}}"))
 
         );
     }
