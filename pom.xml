@@ -96,6 +96,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+
     </dependencies>
 
     <build>
@@ -109,6 +111,14 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.2.0</version>
+                <configuration>
+                    <repoToken>RQmBU1KqlhJkQ19q5flggxzVgmrHwLeYV</repoToken>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
