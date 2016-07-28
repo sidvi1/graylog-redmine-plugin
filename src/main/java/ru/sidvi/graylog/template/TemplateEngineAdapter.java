@@ -1,7 +1,7 @@
 package ru.sidvi.graylog.template;
 
 import com.floreysoft.jmte.Engine;
-import ru.sidvi.graylog.DataExtractor;
+import ru.sidvi.graylog.extractors.DataExtractor;
 
 import java.util.Map;
 

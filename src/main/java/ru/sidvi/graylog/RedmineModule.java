@@ -3,6 +3,7 @@ package ru.sidvi.graylog;
 import org.graylog2.plugin.PluginModule;
 import ru.sidvi.graylog.api.RedmineClientFactory;
 import ru.sidvi.graylog.marker.DescriptionUniqMarker;
+import ru.sidvi.graylog.marker.UniqIssueMarker;
 import ru.sidvi.graylog.marker.hash.Hash;
 import ru.sidvi.graylog.marker.hash.MD5Hash;
 import ru.sidvi.graylog.template.IssueTemplater;
@@ -17,7 +18,7 @@ public class RedmineModule extends PluginModule {
     @Override
     protected void configure() {
         bind(RedmineClientFactory.class);
-        bind(DescriptionUniqMarker.class);
+        bind(UniqIssueMarker.class).to(DescriptionUniqMarker.class);
         bind(IssueTemplater.class);
         bind(TemplateEngineAdapter.class);
         bind(Redmine.class);

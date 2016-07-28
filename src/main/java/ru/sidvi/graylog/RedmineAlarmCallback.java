@@ -14,6 +14,7 @@ import org.graylog2.plugin.streams.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.api.IssueDTO;
+import ru.sidvi.graylog.extractors.DataExtractor;
 import ru.sidvi.graylog.template.IssueTemplater;
 
 import javax.inject.Inject;

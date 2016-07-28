@@ -1,6 +1,6 @@
 package ru.sidvi.graylog.template;
 
-import ru.sidvi.graylog.DataExtractor;
+import ru.sidvi.graylog.extractors.DataExtractor;
 
 import javax.inject.Inject;
 
