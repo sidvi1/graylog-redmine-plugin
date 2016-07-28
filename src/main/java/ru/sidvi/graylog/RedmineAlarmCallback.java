@@ -22,6 +22,9 @@ import java.util.Map;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class RedmineAlarmCallback implements AlarmCallback {
     private static final String SERVER_URL = "r_server_url";
     private static final String API_KEY = "r_api_key";

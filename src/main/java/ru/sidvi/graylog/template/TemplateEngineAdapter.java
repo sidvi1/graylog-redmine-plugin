@@ -5,6 +5,9 @@ import ru.sidvi.graylog.DataExtractor;
 
 import java.util.Map;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class TemplateEngineAdapter {
 
     public String processTemplate(DataExtractor extractor, String template) {

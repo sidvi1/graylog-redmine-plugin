@@ -18,6 +18,8 @@ import static com.google.common.base.MoreObjects.firstNonNull;
 
 /**
  * Extract data from Graylog stream and message.
+ *
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 public class DataExtractor {
 

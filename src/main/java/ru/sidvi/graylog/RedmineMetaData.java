@@ -8,6 +8,9 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Set;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class RedmineMetaData implements PluginMetaData {
     @Override
     public String getUniqueId() {

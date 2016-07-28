@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 /**
  * Create templates for issue fields.
+ *
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 public class IssueTemplater {
 

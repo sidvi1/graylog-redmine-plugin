@@ -7,6 +7,9 @@ import org.graylog2.plugin.PluginModule;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class RedminePlugin implements Plugin {
     @Override
     public PluginMetaData metadata() {

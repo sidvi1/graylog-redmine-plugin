@@ -2,6 +2,9 @@ package ru.sidvi.graylog.api;
 
 import com.google.common.base.Objects;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class IssueDTO {
 
     private String title;

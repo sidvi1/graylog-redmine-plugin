@@ -2,6 +2,8 @@ package ru.sidvi.graylog.template;
 
 /**
  * Holds keywords used in template.
+ *
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 public final class TemplateKeywords {
 

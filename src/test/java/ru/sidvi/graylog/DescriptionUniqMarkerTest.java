@@ -2,16 +2,20 @@ package ru.sidvi.graylog;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.sidvi.graylog.hash.Hash;
-import ru.sidvi.graylog.hash.MD5Hash;
+import ru.sidvi.graylog.marker.hash.Hash;
+import ru.sidvi.graylog.marker.hash.MD5Hash;
 import ru.sidvi.graylog.api.IssueDTO;
-import ru.sidvi.graylog.hash.IssueMarker;
+import ru.sidvi.graylog.marker.DescriptionUniqMarker;
+import ru.sidvi.graylog.marker.UniqIssueMarker;
 
 import static org.junit.Assert.assertEquals;
 
-public class IssueMarkerTest {
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
+public class DescriptionUniqMarkerTest {
     private IssueDTO issue;
-    private IssueMarker marker;
+    private UniqIssueMarker marker;
 
 
     @Before
@@ -20,7 +24,7 @@ public class IssueMarkerTest {
         issue.setTitle("title");
         issue.setDescription("description");
         issue.setProjectIdentifier("project_id");
-        marker = new IssueMarker(new MD5Hash());
+        marker = new DescriptionUniqMarker(new MD5Hash());
     }
 
     @Test

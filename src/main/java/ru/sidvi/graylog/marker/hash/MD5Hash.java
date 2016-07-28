@@ -1,4 +1,4 @@
-package ru.sidvi.graylog.hash;
+package ru.sidvi.graylog.marker.hash;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 @Singleton
 public class MD5Hash implements Hash {
 

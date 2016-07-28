@@ -2,11 +2,14 @@ package ru.sidvi.graylog;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.sidvi.graylog.hash.Hash;
-import ru.sidvi.graylog.hash.MD5Hash;
+import ru.sidvi.graylog.marker.hash.Hash;
+import ru.sidvi.graylog.marker.hash.MD5Hash;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class HashTest {
 
     private MD5Hash hash;

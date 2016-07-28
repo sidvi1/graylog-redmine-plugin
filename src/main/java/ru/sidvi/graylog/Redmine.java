@@ -3,18 +3,21 @@ package ru.sidvi.graylog;
 import ru.sidvi.graylog.api.IssueDTO;
 import ru.sidvi.graylog.api.RedmineClient;
 import ru.sidvi.graylog.api.RedmineClientFactory;
-import ru.sidvi.graylog.hash.IssueMarker;
+import ru.sidvi.graylog.marker.UniqIssueMarker;
 
 import javax.inject.Inject;
 import java.util.List;
 
+/**
+ * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ */
 public class Redmine {
 
-    private IssueMarker marker;
+    private UniqIssueMarker marker;
     private RedmineClientFactory factory;
 
     @Inject
-    public Redmine(IssueMarker marker, RedmineClientFactory factory) {
+    public Redmine(UniqIssueMarker marker, RedmineClientFactory factory) {
         this.marker = marker;
         this.factory = factory;
     }
