@@ -10,8 +10,8 @@ public class IssueDTO {
     private String title;
     private String description;
     private String projectIdentifier;
-    private String type;
-    private String priority;
+    private String type = "Bug";
+    private String priority = "Minor";
 
     public IssueDTO(IssueDTO issue) {
         title = issue.getTitle();

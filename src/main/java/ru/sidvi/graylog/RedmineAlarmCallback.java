@@ -14,6 +14,7 @@ import org.graylog2.plugin.streams.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.api.IssueDTO;
+import ru.sidvi.graylog.extractors.StreamDataExtractor;
 import ru.sidvi.graylog.extractors.DataExtractor;
 import ru.sidvi.graylog.template.IssueTemplater;
 
@@ -57,7 +58,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
         String serverUrl = configuration.getString(SERVER_URL);
         String apiKey = configuration.getString(API_KEY);
 
-        IssueDTO issue = fillIssueFromForm(new DataExtractor(stream, result, getBaseUri()));
+        IssueDTO issue = fillIssueFromForm(new StreamDataExtractor(stream, result, getBaseUri()));
 
         readmine.saveIfNonExists(issue, serverUrl, apiKey);
     }

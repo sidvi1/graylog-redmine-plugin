@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class DescriptionUniqMarkerTest {
     private IssueDTO issue;
-    private UniqIssueMarker marker;
+    private DescriptionUniqMarker marker;
 
 
     @Before
@@ -30,7 +30,7 @@ public class DescriptionUniqMarkerTest {
     @Test
     public void shouldAddMarker() {
         IssueDTO actual = marker.append(issue);
-        assertEquals("description" + Hash.BEGIN_MARKER + "274ee00348d5552d8cd72f7009c5a2d" + Hash.END_MARKER, actual.getDescription());
+        assertEquals("description" + Hash.BEGIN_MARKER + "c0975360f5b4f3c40948144ccaaf596a" + Hash.END_MARKER, actual.getDescription());
     }
 
     @Test
@@ -45,6 +45,6 @@ public class DescriptionUniqMarkerTest {
     public void shouldExtractMarker() {
         marker.append(issue);
         String hash = marker.extract(issue);
-        assertEquals("274ee00348d5552d8cd72f7009c5a2d", hash);
+        assertEquals("c0975360f5b4f3c40948144ccaaf596a", hash);
     }
 }
