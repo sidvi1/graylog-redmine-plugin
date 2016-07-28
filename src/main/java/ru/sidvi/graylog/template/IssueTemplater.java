@@ -33,10 +33,10 @@ public class IssueTemplater {
             "\n";
     public static final String SUBJECT_TEMPLATE = "Graylog alert for stream: ${stream.title}: ${check_result.resultDescription}";
 
-    private TemplateEngineAdapter engine;
+    private TemplateEngine engine;
 
     @Inject
-    public IssueTemplater(TemplateEngineAdapter engine) {
+    public IssueTemplater(TemplateEngine engine) {
         this.engine = engine;
     }
 
