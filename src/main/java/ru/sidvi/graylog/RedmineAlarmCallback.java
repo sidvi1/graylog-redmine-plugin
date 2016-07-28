@@ -100,7 +100,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
         configurationRequest.addField(new TextField(
                 ISSUE_TYPE, "Issue tracker", "Bug", "Tracker for issue.",
-                ConfigurationField.Optional.NOT_OPTIONAL));
+                ConfigurationField.Optional.OPTIONAL));
 
         configurationRequest.addField(new TextField(
                 PRIORITY, "Issue priority", "Minor", "Priority of the issue.",
@@ -108,7 +108,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
         configurationRequest.addField(new TextField(
                 SUBJECT,
-                "Task subject",
+                "Issue subject",
                 IssueTemplater.SUBJECT_TEMPLATE,
                 "The template to generate subject from.",
                 ConfigurationField.Optional.NOT_OPTIONAL,
@@ -117,7 +117,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
         configurationRequest.addField(new TextField(
                 BODY,
-                "Task description tempate",
+                "Issue description tempate",
                 IssueTemplater.BODY_TEMPLATE,
                 "The template to generate the description from",
                 ConfigurationField.Optional.NOT_OPTIONAL,

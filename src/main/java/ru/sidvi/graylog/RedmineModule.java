@@ -8,6 +8,7 @@ import ru.sidvi.graylog.marker.hash.Hash;
 import ru.sidvi.graylog.marker.hash.MD5Hash;
 import ru.sidvi.graylog.template.IssueTemplater;
 import ru.sidvi.graylog.template.JMTEAdapter;
+import ru.sidvi.graylog.template.TemplateEngine;
 
 
 /**
@@ -20,7 +21,7 @@ public class RedmineModule extends PluginModule {
         bind(RedmineClientFactory.class);
         bind(UniqIssueMarker.class).to(DescriptionUniqMarker.class);
         bind(IssueTemplater.class);
-        bind(JMTEAdapter.class);
+        bind(TemplateEngine.class).to(JMTEAdapter.class);
         bind(Redmine.class);
         bind(Hash.class).to(MD5Hash.class);
 
