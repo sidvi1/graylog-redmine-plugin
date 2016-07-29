@@ -1,6 +1,5 @@
 package ru.sidvi.graylog;
 
-import ru.sidvi.graylog.api.IssueDTO;
 import ru.sidvi.graylog.api.RedmineClient;
 import ru.sidvi.graylog.api.RedmineClientFactory;
 import ru.sidvi.graylog.marker.UniqIssueMarker;

@@ -1,5 +1,6 @@
 package ru.sidvi.graylog.template;
 
+import org.apache.commons.lang.StringUtils;
 import ru.sidvi.graylog.extractors.DataExtractor;
 
 import javax.inject.Inject;
@@ -41,18 +42,11 @@ public class IssueTemplater {
     }
 
     public String buildSubject(DataExtractor extractor, String value) {
-        return engine.processTemplate(extractor, defaultIfEmpty(value, SUBJECT_TEMPLATE));
+        return engine.processTemplate(extractor, StringUtils.defaultIfEmpty(value, SUBJECT_TEMPLATE));
     }
 
     public String buildBody(DataExtractor extractor, String value) {
-        return engine.processTemplate(extractor, defaultIfEmpty(value, BODY_TEMPLATE));
-    }
-
-    private String defaultIfEmpty(String value, String defaultValue) {
-        if (value != null && value.length() != 0) {
-            return value;
-        }
-        return defaultValue;
+        return engine.processTemplate(extractor, StringUtils.defaultIfEmpty(value, BODY_TEMPLATE));
     }
 
 }

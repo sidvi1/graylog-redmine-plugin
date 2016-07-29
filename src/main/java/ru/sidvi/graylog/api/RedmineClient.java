@@ -1,5 +1,7 @@
 package ru.sidvi.graylog.api;
 
+import ru.sidvi.graylog.IssueDTO;
+
 import java.util.List;
 
 /**

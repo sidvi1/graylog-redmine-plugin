@@ -1,4 +1,4 @@
-package ru.sidvi.graylog.api;
+package ru.sidvi.graylog;
 
 import com.google.common.base.Objects;
 

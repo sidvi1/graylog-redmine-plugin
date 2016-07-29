@@ -1,6 +1,6 @@
 package ru.sidvi.graylog.marker;
 
-import ru.sidvi.graylog.api.IssueDTO;
+import ru.sidvi.graylog.IssueDTO;
 import ru.sidvi.graylog.marker.hash.Hash;
 
 import javax.inject.Inject;

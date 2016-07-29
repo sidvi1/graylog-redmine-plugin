@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndProxy;
+import ru.sidvi.graylog.IssueDTO;
 
 /**
  * This class used as helper, to record request to Redmine server.

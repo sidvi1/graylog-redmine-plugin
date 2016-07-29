@@ -1,6 +1,6 @@
 package ru.sidvi.graylog.marker;
 
-import ru.sidvi.graylog.api.IssueDTO;
+import ru.sidvi.graylog.IssueDTO;
 
 /**
  * Add hash marker to one of issue fields.

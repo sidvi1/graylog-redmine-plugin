@@ -6,6 +6,7 @@ import org.mockserver.model.Header;
 import org.mockserver.model.Parameter;
 import org.mockserver.model.StringBody;
 import org.mockserver.socket.PortFactory;
+import ru.sidvi.graylog.IssueDTO;
 
 import java.io.IOException;
 import java.util.List;

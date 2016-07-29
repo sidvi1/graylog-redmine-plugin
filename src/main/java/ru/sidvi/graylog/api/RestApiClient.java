@@ -5,6 +5,7 @@ import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.sidvi.graylog.IssueDTO;
 
 import java.util.ArrayList;
 import java.util.List;
