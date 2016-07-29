@@ -88,14 +88,4 @@ class RestApiClient implements RedmineClient {
         }
         return issuePriorities.get(0).getId();
     }
-
-    private Tracker getTracker(List<Tracker> trackers, Tracker defaultTracker, IssueDTO holder) throws RedmineException {
-        for (Tracker t : trackers) {
-            if (t.getName().equals(holder.getType())) {
-                return t;
-            }
-            defaultTracker = t;
-        }
-        return defaultTracker;
-    }
 }
