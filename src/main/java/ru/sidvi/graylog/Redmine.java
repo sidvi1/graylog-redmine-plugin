@@ -28,7 +28,7 @@ public class Redmine {
         String projectIdentifier = issue.getProjectIdentifier();
         List<IssueDTO> projectIssues = client.getAll(projectIdentifier);
 
-        if (isExists(issue, projectIssues)) {
+        if (!isExists(issue, projectIssues)) {
             client.create(marker.append(issue));
         }
     }

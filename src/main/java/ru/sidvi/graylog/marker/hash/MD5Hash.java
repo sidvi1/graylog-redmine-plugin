@@ -45,7 +45,7 @@ public class MD5Hash implements Hash {
             int end = value.indexOf(END_MARKER);
             return value.substring(begin + BEGIN_MARKER.length(), end);
         }
-        return value;
+        return "";
     }
 
     @Override
