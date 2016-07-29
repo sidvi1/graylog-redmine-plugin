@@ -14,7 +14,7 @@ import java.util.List;
 class AlarmBacklog {
 
     private AlertCondition alertCondition;
-    private List<MessageSummary> matchingMessages ;
+    private List<MessageSummary> matchingMessages;
 
     public AlarmBacklog(AlertCondition alertCondition, List<MessageSummary> matchingMessages) {
         this.alertCondition = alertCondition;

@@ -43,11 +43,11 @@ class RestApiClient implements RedmineClient {
     private Tracker getTracker(IssueDTO holder) throws RedmineException {
         List<Tracker> trackers = Lists.reverse(issueManager.getTrackers());
         for (Tracker tracker : trackers) {
-            if(tracker.getName().equals(holder.getType())){
+            if (tracker.getName().equals(holder.getType())) {
                 return tracker;
             }
         }
-        return trackers.get(trackers.size()-1); //we should have at least one tracker
+        return trackers.get(trackers.size() - 1); //we should have at least one tracker
     }
 
     @Override
@@ -65,7 +65,7 @@ class RestApiClient implements RedmineClient {
                 issueDTOs.add(issue);
             }
         } catch (RedmineException e) {
-            logger.error("Exception while getting all issues from project "+ projectIdentifier, e);
+            logger.error("Exception while getting all issues from project " + projectIdentifier, e);
         }
         return issueDTOs;
     }

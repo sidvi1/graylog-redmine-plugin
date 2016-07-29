@@ -13,20 +13,23 @@ import org.graylog2.plugin.configuration.fields.TextField;
 import org.graylog2.plugin.streams.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.sidvi.graylog.extractors.StreamDataExtractor;
 import ru.sidvi.graylog.extractors.DataExtractor;
-import ru.sidvi.graylog.template.IssueTemplater;
+import ru.sidvi.graylog.extractors.StreamDataExtractor;
+import ru.sidvi.graylog.template.TemplateEngine;
 
 import javax.inject.Inject;
 import java.net.URI;
 import java.util.Map;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+import static org.apache.commons.lang.StringUtils.defaultIfEmpty;
 
 /**
  * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 public class RedmineAlarmCallback implements AlarmCallback {
+    private static final String BODY_TEMPLATE = Utils.fromResource("body_template.tpl");
+    private static final String SUBJECT_TEMPLATE = Utils.fromResource("subject_template.tpl");
     private static final String SERVER_URL = "r_server_url";
     private static final String API_KEY = "r_api_key";
     private static final String PROJECT_IDENTIFIER = "r_project_identifier";
@@ -34,16 +37,18 @@ public class RedmineAlarmCallback implements AlarmCallback {
     private static final String PRIORITY = "r_priority";
     private static final String BODY = "r_body";
     private static final String SUBJECT = "r_subject";
+
     private final Logger logger = LoggerFactory.getLogger(RedmineAlarmCallback.class);
+
     private Configuration configuration;
     private Redmine readmine;
-    private IssueTemplater templater;
+    private TemplateEngine engine;
     private EmailConfiguration emailConfig;
 
     @Inject
-    public RedmineAlarmCallback(Redmine readmine, IssueTemplater templater, EmailConfiguration emailConfig) {
+    public RedmineAlarmCallback(Redmine readmine, TemplateEngine engine, EmailConfiguration emailConfig) {
         this.readmine = readmine;
-        this.templater = templater;
+        this.engine = engine;
         this.emailConfig = emailConfig;
     }
 
@@ -67,8 +72,8 @@ public class RedmineAlarmCallback implements AlarmCallback {
         issue.setProjectIdentifier(configuration.getString(PROJECT_IDENTIFIER));
         issue.setType(configuration.getString(ISSUE_TYPE));
         issue.setPriority(configuration.getString(PRIORITY));
-        issue.setDescription(templater.buildBody(extractor, configuration.getString(BODY)));
-        issue.setTitle(templater.buildSubject(extractor, configuration.getString(SUBJECT)));
+        issue.setDescription(engine.processTemplate(extractor, defaultIfEmpty(configuration.getString(BODY), BODY_TEMPLATE)));
+        issue.setTitle(engine.processTemplate(extractor, defaultIfEmpty(configuration.getString(SUBJECT), SUBJECT_TEMPLATE)));
         return issue;
     }
 
@@ -100,7 +105,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
         configurationRequest.addField(new TextField(
                 SUBJECT,
                 "Issue subject template",
-                IssueTemplater.SUBJECT_TEMPLATE,
+                SUBJECT_TEMPLATE,
                 "The template to generate subject from.",
                 ConfigurationField.Optional.NOT_OPTIONAL
         ));
@@ -108,7 +113,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
         configurationRequest.addField(new TextField(
                 BODY,
                 "Issue description tempate",
-                IssueTemplater.BODY_TEMPLATE,
+                BODY_TEMPLATE,
                 "The template to generate the description from.",
                 ConfigurationField.Optional.NOT_OPTIONAL,
                 TextField.Attribute.TEXTAREA));

@@ -1,6 +1,9 @@
 package ru.sidvi.graylog.api;
 
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import org.mockserver.model.Parameter;
@@ -15,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
-import static ru.sidvi.graylog.TestUtils.fromResource;
+import static ru.sidvi.graylog.Utils.fromResource;
 
 /**
  * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
@@ -40,7 +43,7 @@ public class RestApiClientTest {
     }
 
     @Before
-    public void reset(){
+    public void reset() {
         MOCK_SERVER.reset();
     }
 
@@ -196,7 +199,7 @@ public class RestApiClientTest {
         );
 
         assertEquals(2, actual.size());
-        
+
         IssueDTO issue1 = new IssueDTO();
         issue1.setTitle("Subject 1");
         issue1.setDescription("Description 1");

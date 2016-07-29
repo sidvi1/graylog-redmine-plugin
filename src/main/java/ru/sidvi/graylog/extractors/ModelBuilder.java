@@ -26,7 +26,7 @@ class ModelBuilder {
     public ModelBuilder addCheckResult(AlertCondition.CheckResult checkResult) {
         model.put(ModelKeys.CHECK_RESULT, checkResult);
         model.put(ModelKeys.ALERT_CONDITION, checkResult.getTriggeredCondition());
-        return  this;
+        return this;
     }
 
     public ModelBuilder addStreamUrl(String streamUrl) {
@@ -34,7 +34,7 @@ class ModelBuilder {
         return this;
     }
 
-    public ModelBuilder addBacklogMessages(List<Message> backlog){
+    public ModelBuilder addBacklogMessages(List<Message> backlog) {
         final List<Message> messages = firstNonNull(backlog, Collections.<Message>emptyList());
         model.put(ModelKeys.BACKLOG, messages);
         model.put(ModelKeys.BACKLOG_SIZE, messages.size());

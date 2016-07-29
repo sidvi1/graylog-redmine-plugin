@@ -2,9 +2,9 @@ package ru.sidvi.graylog;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.sidvi.graylog.marker.DescriptionUniqMarker;
 import ru.sidvi.graylog.marker.hash.Hash;
 import ru.sidvi.graylog.marker.hash.MD5Hash;
-import ru.sidvi.graylog.marker.DescriptionUniqMarker;
 
 import static org.junit.Assert.assertEquals;
 
