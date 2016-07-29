@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface RedmineClient {
 
-    void create(IssueDTO issue);
+    boolean create(IssueDTO issue);
 
     List<IssueDTO> getAll(String projectIdentifier);
 }

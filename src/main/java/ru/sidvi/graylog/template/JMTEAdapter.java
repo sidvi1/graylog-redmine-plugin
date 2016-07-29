@@ -11,9 +11,8 @@ import java.util.Map;
 public class JMTEAdapter implements TemplateEngine {
 
     @Override
-    public String processTemplate(DataExtractor extractor, String template) {
-        Map<String, Object> model = extractor.extract();
+    public String processTemplate(Map<String, Object> value, String template) {
         Engine engine = new Engine();
-        return engine.transform(template, model);
+        return engine.transform(template, value);
     }
 }

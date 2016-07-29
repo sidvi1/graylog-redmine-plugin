@@ -27,7 +27,7 @@ class RestApiClient implements RedmineClient {
     }
 
     @Override
-    public void create(IssueDTO holder) {
+    public boolean create(IssueDTO holder) {
         try {
             Integer priority = getPriority(issueManager.getIssuePriorities(), holder);
             Project project = projectManager.getProjectByKey(holder.getProjectIdentifier());
@@ -37,7 +37,9 @@ class RestApiClient implements RedmineClient {
             issueManager.createIssue(issue);
         } catch (RedmineException e) {
             logger.error("Exception while create issue.", e);
+            return false;
         }
+        return true;
     }
 
     private Tracker getTracker(IssueDTO holder) throws RedmineException {

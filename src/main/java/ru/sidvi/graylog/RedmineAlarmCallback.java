@@ -28,8 +28,8 @@ import static org.apache.commons.lang.StringUtils.defaultIfEmpty;
  * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 public class RedmineAlarmCallback implements AlarmCallback {
-    private static final String BODY_TEMPLATE = Utils.fromResource("body_template.tpl");
-    private static final String SUBJECT_TEMPLATE = Utils.fromResource("subject_template.tpl");
+    private static final String BODY_TEMPLATE = "";
+    private static final String SUBJECT_TEMPLATE = "";
     private static final String SERVER_URL = "r_server_url";
     private static final String API_KEY = "r_api_key";
     private static final String PROJECT_IDENTIFIER = "r_project_identifier";
@@ -62,18 +62,21 @@ public class RedmineAlarmCallback implements AlarmCallback {
         String serverUrl = configuration.getString(SERVER_URL);
         String apiKey = configuration.getString(API_KEY);
 
-        IssueDTO issue = fillIssueFromForm(new StreamDataExtractor(stream, result, getBaseUri()));
+        DataExtractor extractor = new StreamDataExtractor(stream, result, getBaseUri());
+        Map<String, Object> values = extractor.extract();
+        logger.info("Values extracted from stream");
+        IssueDTO issue = fillIssueFromForm(values);
 
         readmine.saveIfNonExists(issue, serverUrl, apiKey);
     }
 
-    private IssueDTO fillIssueFromForm(DataExtractor extractor) {
+    private IssueDTO fillIssueFromForm(Map<String, Object> values) {
         IssueDTO issue = new IssueDTO();
         issue.setProjectIdentifier(configuration.getString(PROJECT_IDENTIFIER));
         issue.setType(configuration.getString(ISSUE_TYPE));
         issue.setPriority(configuration.getString(PRIORITY));
-        issue.setDescription(engine.processTemplate(extractor, defaultIfEmpty(configuration.getString(BODY), BODY_TEMPLATE)));
-        issue.setTitle(engine.processTemplate(extractor, defaultIfEmpty(configuration.getString(SUBJECT), SUBJECT_TEMPLATE)));
+        issue.setDescription(engine.processTemplate(values, defaultIfEmpty(configuration.getString(BODY), BODY_TEMPLATE)));
+        issue.setTitle(engine.processTemplate(values, defaultIfEmpty(configuration.getString(SUBJECT), SUBJECT_TEMPLATE)));
         return issue;
     }
 
