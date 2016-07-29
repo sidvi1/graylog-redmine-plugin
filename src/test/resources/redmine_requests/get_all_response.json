@@ -1,0 +1,63 @@
+{
+  "issues": [
+    {
+      "id": 1,
+      "project": {
+        "id": 11,
+        "name": "test1111"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 7,
+        "name": "Immediate"
+      },
+      "author": {
+        "id": 5,
+        "name": "V S"
+      },
+      "subject": "Subject 1",
+      "description": "Description 1",
+      "done_ratio": 0,
+      "created_on": "2016-07-29T12:17:40Z",
+      "updated_on": "2016-07-29T12:17:40Z"
+    },
+    {
+      "id": 2,
+      "project": {
+        "id": 11,
+        "name": "test1111"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "priority": {
+        "id": 1,
+        "name": "Minor"
+      },
+      "author": {
+        "id": 5,
+        "name": "V S"
+      },
+      "subject": "Subject 2",
+      "description": "Description 2",
+      "done_ratio": 0,
+      "created_on": "2016-07-28T13:11:43Z",
+      "updated_on": "2016-07-28T13:11:43Z"
+    }
+  ],
+  "total_count": 2,
+  "offset": 0,
+  "limit": 25
+}
