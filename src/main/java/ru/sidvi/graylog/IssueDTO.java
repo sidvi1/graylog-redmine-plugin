@@ -91,4 +91,14 @@ public class IssueDTO {
     public int hashCode() {
         return Objects.hashCode(title, description, projectIdentifier, type, priority);
     }
+
+    public String getDataForHash() {
+        return "IssueDTO{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", projectIdentifier='" + projectIdentifier + '\'' +
+                ", type='" + type + '\'' +
+                ", priority='" + priority + '\'' +
+                '}';
+    }
 }

@@ -36,6 +36,6 @@ public class DescriptionUniqMarker implements UniqIssueMarker {
 
     @Override
     public String calculate(IssueDTO issue) {
-        return hash.calc(issue.toString());
+        return hash.calc(issue.getDataForHash());
     }
 }

@@ -1,5 +1,7 @@
 package ru.sidvi.graylog;
 
+import com.taskadapter.redmineapi.RedmineManager;
+import com.taskadapter.redmineapi.RedmineManagerFactory;
 import org.graylog2.configuration.EmailConfiguration;
 import org.graylog2.plugin.alarms.AlertCondition;
 import org.graylog2.plugin.alarms.callbacks.AlarmCallback;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.extractors.DataExtractor;
 import ru.sidvi.graylog.extractors.StreamDataExtractor;
 import ru.sidvi.graylog.template.TemplateEngine;
+import uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J;
 
 import javax.inject.Inject;
 import java.net.URI;
@@ -23,13 +26,14 @@ import java.util.Map;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.apache.commons.lang.StringUtils.defaultIfEmpty;
+import static ru.sidvi.graylog.Utils.fromResource;
 
 /**
  * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 public class RedmineAlarmCallback implements AlarmCallback {
-    private static final String BODY_TEMPLATE = "";
-    private static final String SUBJECT_TEMPLATE = "";
+    private static final String BODY_TEMPLATE = fromResource("body_template.tpl");
+    private static final String SUBJECT_TEMPLATE = fromResource("subject_template.tpl");
     private static final String SERVER_URL = "r_server_url";
     private static final String API_KEY = "r_api_key";
     private static final String PROJECT_IDENTIFIER = "r_project_identifier";
@@ -64,7 +68,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
         DataExtractor extractor = new StreamDataExtractor(stream, result, getBaseUri());
         Map<String, Object> values = extractor.extract();
-        logger.info("Values extracted from stream");
+        logger.info("Values extracted from stream. Values count is {}", values.size());
         IssueDTO issue = fillIssueFromForm(values);
 
         readmine.saveIfNonExists(issue, serverUrl, apiKey);

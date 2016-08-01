@@ -3,9 +3,14 @@ package ru.sidvi.graylog.api;
 import com.google.common.collect.Lists;
 import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.IssueDTO;
+import uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +19,20 @@ import java.util.List;
  * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 class RestApiClient implements RedmineClient {
+    static {
+        SysOutOverSLF4J.sendSystemOutAndErrToSLF4J(); //need to bind System.err to slf4j
+    }
 
-    private final Logger logger = LoggerFactory.getLogger(IssueDTO.class);
+    private final Logger logger = LoggerFactory.getLogger(RestApiClient.class);
 
     private IssueManager issueManager;
     private ProjectManager projectManager;
 
     public RestApiClient(String serverUrl, String apiKey) {
-        RedmineManager manager = RedmineManagerFactory.createWithApiKey(serverUrl, apiKey);
+        logger.info("Creating RedmineManager for server url {} and api key {}", serverUrl, apiKey);
+        HttpClient client = new DefaultHttpClient();
+        RedmineManager manager = RedmineManagerFactory.createWithApiKey(serverUrl, apiKey, client);
+        logger.info("RedmineManager created");
         issueManager = manager.getIssueManager();
         projectManager = manager.getProjectManager();
     }
@@ -29,51 +40,89 @@ class RestApiClient implements RedmineClient {
     @Override
     public boolean create(IssueDTO holder) {
         try {
-            Integer priority = getPriority(issueManager.getIssuePriorities(), holder);
-            Project project = projectManager.getProjectByKey(holder.getProjectIdentifier());
+            logger.info("Try to create issue {}", holder);
+            Integer priority = getPriority(holder);
+            Project project = getProjectByKey(holder.getProjectIdentifier());
             Tracker tracker = getTracker(holder);
 
-            Issue issue = fillIssue(holder, project, priority, tracker);
+            Issue issue = mapFromHolder(holder, project, priority, tracker);
             issueManager.createIssue(issue);
         } catch (RedmineException e) {
-            logger.error("Exception while create issue.", e);
+            logger.error("Exception while create issue {}", holder, e);
             return false;
         }
         return true;
-    }
-
-    private Tracker getTracker(IssueDTO holder) throws RedmineException {
-        List<Tracker> trackers = Lists.reverse(issueManager.getTrackers());
-        for (Tracker tracker : trackers) {
-            if (tracker.getName().equals(holder.getType())) {
-                return tracker;
-            }
-        }
-        return trackers.get(trackers.size() - 1); //we should have at least one tracker
     }
 
     @Override
     public List<IssueDTO> getAll(String projectIdentifier) {
         List<IssueDTO> issueDTOs = new ArrayList<>();
         try {
-            List<Issue> issues = issueManager.getIssues(projectIdentifier, null);
-            for (Issue fromServer : issues) {
-                IssueDTO issue = new IssueDTO();
-                issue.setTitle(fromServer.getSubject());
-                issue.setDescription(fromServer.getDescription());
-                issue.setProjectIdentifier(projectIdentifier);
-                issue.setPriority(fromServer.getPriorityText());
-                issue.setType(fromServer.getTracker().getName());
-                issueDTOs.add(issue);
-            }
+            logger.info("Try to load all issue from project {}", projectIdentifier);
+            issueDTOs = convert(issueManager.getIssues(projectIdentifier, null), projectIdentifier);
         } catch (RedmineException e) {
-            logger.error("Exception while getting all issues from project " + projectIdentifier, e);
+            logger.error("Exception while load all issues from project {}", projectIdentifier, e);
         }
+        logger.info("Load issues from project {}", projectIdentifier);
+        logger.info("{}", issueDTOs);
         return issueDTOs;
     }
 
+    private Project getProjectByKey(String projectIdentifier) throws RedmineException {
+        Project project = projectManager.getProjectByKey(projectIdentifier);
+        logger.info("Found project {} by key {}", Utils.toString(project), projectIdentifier);
+        return project;
+    }
 
-    private Issue fillIssue(IssueDTO holder, Project project, Integer priority, Tracker tracker) throws RedmineException {
+    private Integer getPriority(IssueDTO holder) throws RedmineException {
+        List<IssuePriority> issuePriorities = Lists.reverse(issueManager.getIssuePriorities());
+        logger.info("Found issue priorities {}", issuePriorities);
+
+        Integer result = issuePriorities.get(0).getId();
+        for (IssuePriority p : issuePriorities) {
+            if (p.getName().equals(holder.getPriority())) {
+                result = p.getId();
+            }
+        }
+
+        logger.info("Selected priority is {}", result);
+        return result;
+    }
+
+    private Tracker getTracker(IssueDTO holder) throws RedmineException {
+        List<Tracker> trackers = Lists.reverse(issueManager.getTrackers());
+        logger.info("Found trackers {}", Utils.toString(trackers));
+        Tracker result = trackers.get(trackers.size() - 1); //we should have at least one tracker
+
+        for (Tracker tracker : trackers) {
+            if (tracker.getName().equals(holder.getType())) {
+                result = tracker;
+            }
+        }
+
+        logger.info("Selected tracker is {}", Utils.toString(result));
+        return result;
+    }
+
+    private List<IssueDTO> convert(List<Issue> issues, String projectIdentifier) {
+        List<IssueDTO> result = new ArrayList<>();
+        for (Issue fromServer : issues) {
+            result.add(mapToHolder(fromServer, projectIdentifier));
+        }
+        return result;
+    }
+
+    private IssueDTO mapToHolder(Issue fromServer, String projectIdentifier) {
+        IssueDTO issue = new IssueDTO();
+        issue.setTitle(fromServer.getSubject());
+        issue.setDescription(fromServer.getDescription());
+        issue.setProjectIdentifier(projectIdentifier);
+        issue.setPriority(fromServer.getPriorityText());
+        issue.setType(fromServer.getTracker().getName());
+        return issue;
+    }
+
+    private Issue mapFromHolder(IssueDTO holder, Project project, Integer priority, Tracker tracker) throws RedmineException {
         Issue i = IssueFactory.create(project.getId(), holder.getTitle());
         i.setTracker(tracker);
         i.setPriorityId(priority);
@@ -82,13 +131,31 @@ class RestApiClient implements RedmineClient {
         return i;
     }
 
-    private Integer getPriority(List<IssuePriority> issuePriorities, IssueDTO holder) {
-        issuePriorities = Lists.reverse(issuePriorities);
-        for (IssuePriority p : issuePriorities) {
-            if (p.getName().equals(holder.getPriority())) {
-                return p.getId();
+    private static class Utils {
+
+        private static String toString(List objects) {
+            StringBuilder builder = new StringBuilder();
+            for (Object o : objects) {
+                if (o instanceof Tracker) {
+                    builder.append(toString((Tracker) o));
+                }
+                if (o instanceof IssuePriority) {
+                    builder.append(toString((IssuePriority) o));
+                }
             }
+            return builder.toString();
         }
-        return issuePriorities.get(0).getId();
+
+        private static String toString(IssuePriority o) {
+            return String.valueOf(o.getId()) + " " + o.getName() + ";";
+        }
+
+        private static String toString(Tracker o) {
+            return String.valueOf(o.getId()) + " " + o.getName() + ";";
+        }
+
+        private static String toString(Project o) {
+            return String.valueOf(o.getId()) + " " + o.getName() + ";";
+        }
     }
 }

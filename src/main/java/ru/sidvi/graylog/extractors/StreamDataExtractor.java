@@ -4,6 +4,8 @@ import org.graylog2.plugin.MessageSummary;
 import org.graylog2.plugin.Tools;
 import org.graylog2.plugin.alarms.AlertCondition;
 import org.graylog2.plugin.streams.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.List;
@@ -22,6 +24,8 @@ public class StreamDataExtractor implements DataExtractor {
     private final AlertCondition.CheckResult result;
     private URI webInterfaceUri;
 
+    private final Logger logger = LoggerFactory.getLogger(StreamDataExtractor.class);
+
     public StreamDataExtractor(Stream stream, AlertCondition.CheckResult result, URI webInterfaceUri) {
         this.stream = stream;
         this.result = result;
@@ -30,10 +34,10 @@ public class StreamDataExtractor implements DataExtractor {
 
     @Override
     public Map<String, Object> extract() {
+        logger.info("Exract data from stream {} with id {}", stream.getTitle(), stream.getId());
 
         final AlertCondition alertCondition = result.getTriggeredCondition();
         final List<MessageSummary> matchingMessages = result.getMatchingMessages();
-        AlarmBacklog backlog = new AlarmBacklog(alertCondition, matchingMessages);
 
         String id = stream.getId();
         int time = calculateTime(result);
@@ -41,23 +45,34 @@ public class StreamDataExtractor implements DataExtractor {
         String alertEnd = Tools.getISO8601String(result.getTriggeredAt());
         String streamUrl = buildStreamDetailsURL(webInterfaceUri, id, alertStart, alertEnd);
 
-        return new ModelBuilder()
+        AlarmBacklogExtractor backlog = new AlarmBacklogExtractor(alertCondition, matchingMessages);
+        Map<String, Object> result = new ModelBuilder()
                 .addStream(stream)
-                .addCheckResult(result)
+                .addCheckResult(this.result)
                 .addStreamUrl(streamUrl)
-                .addBacklogMessages(backlog.getMathingMessages())
+                .addBacklogMessages(backlog.extractMatchingMessages())
                 .build();
+
+        logger.info("Builded model. Model keys count {}", result.size());
+
+        return result;
     }
 
     private String buildStreamDetailsURL(URI baseUri, String streamId, String alertStart, String alertEnd) {
-        return baseUri + "/streams/" + streamId + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
+        String result = baseUri + "/streams/" + streamId + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
+        logger.info("Stream details uri is {}", result);
+        return result;
     }
 
     private int calculateTime(AlertCondition.CheckResult checkResult) {
+        int result = DEFAULT_TIME_COUNT;
         Map<String, Object> parameters = checkResult.getTriggeredCondition().getParameters();
         if (parameters.get("time") != null) {
-            return (int) parameters.get("time");
+            result = (int) parameters.get("time");
         }
-        return DEFAULT_TIME_COUNT;
+
+        logger.info("Time count to retrive messages is {}", result);
+
+        return result;
     }
 }
