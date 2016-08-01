@@ -23,22 +23,15 @@ public class JMTEAdapterTest {
     @InjectMocks
     private JMTEAdapter adapter;
 
-    @Mock
-    private DataExtractor extractor;
-
     @Test
     public void shouldProcess() {
         Map<String, Object> result = new HashMap<>();
         result.put("stream_url", "URL");
 
-        when(extractor.extract()).thenReturn(result);
 
         String template = "Stream url is ${stream_url}.";
-        String actual = adapter.processTemplate(extractor, template);
+        String actual = adapter.processTemplate(result, template);
 
         assertEquals("Stream url is URL.", actual);
-        verify(extractor, times(1)).extract();
     }
-
-
 }
