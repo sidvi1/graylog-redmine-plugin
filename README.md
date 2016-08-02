@@ -90,4 +90,5 @@ Copiright
 ------
 Plugin based on some code EmailAlarmCallback plugin.
 Inspired by [graylog-jira-alarmcallback](https://github.com/magicdude4eva/graylog-jira-alarmcallback)
+
 Copyright (c) 2016 Vitaly Sidorov. See LICENSE for further details.
