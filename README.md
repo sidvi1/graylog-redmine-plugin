@@ -11,6 +11,7 @@ Graylog alarm callback plugin for Redmine issue tracker.
 
 **Required Graylog version:** 2.0 and later
 
+
 Installation
 ------------
 **NOTE: Currently this plugin conflict with graylog-map-widget-plugin and any other plugins bundle `org.apache.httpcomponents.httpclient`.
@@ -22,6 +23,7 @@ is the `plugins/` folder relative from your `graylog-server` directory by defaul
 and can be configured in your `graylog.conf` file.
 
 Restart `graylog-server` and you are done.
+
 
 Usage
 -----
@@ -65,16 +67,23 @@ Available template parameters:
 - check_result
 - alert_condition
 
+
 Screenshots
 -----
 Plugin configuration form
+
 ![Plugin configuration form](screenshot_form.png)
 
+
 Sample alert configuration
+
 ![Sample alert configuration](screenshot_page.png)
 
+
 Redmine task received from graylog
+
 ![Redmine task received from graylog](screenshot_redmine.png)
+
 
 Copiright
 ------
