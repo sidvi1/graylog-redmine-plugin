@@ -35,9 +35,9 @@ class RestApiClient implements RedmineClient {
     public boolean create(IssueDTO holder) {
         try {
             logger.debug("Try to create issue {}", holder);
-            Integer priority = getPriority(holder);
+            Integer priority = getPriority(holder, Lists.reverse(issueManager.getIssuePriorities()));
             Project project = getProjectByKey(holder.getProjectIdentifier());
-            Tracker tracker = getTracker(holder);
+            Tracker tracker = getTracker(holder, Lists.reverse(issueManager.getTrackers()));
 
             Issue issue = mapFromHolder(holder, project, priority, tracker);
             issueManager.createIssue(issue);
@@ -68,8 +68,7 @@ class RestApiClient implements RedmineClient {
         return project;
     }
 
-    private Integer getPriority(IssueDTO holder) throws RedmineException {
-        List<IssuePriority> issuePriorities = Lists.reverse(issueManager.getIssuePriorities());
+    private Integer getPriority(IssueDTO holder, List<IssuePriority> issuePriorities) throws RedmineException {
         logger.debug("Found issue priorities {}", issuePriorities);
 
         Integer result = issuePriorities.get(0).getId();
@@ -83,11 +82,10 @@ class RestApiClient implements RedmineClient {
         return result;
     }
 
-    private Tracker getTracker(IssueDTO holder) throws RedmineException {
-        List<Tracker> trackers = Lists.reverse(issueManager.getTrackers());
+    private Tracker getTracker(IssueDTO holder, List<Tracker> trackers) throws RedmineException {
         logger.debug("Found trackers {}", Utils.toString(trackers));
-        Tracker result = trackers.get(trackers.size() - 1); //we should have at least one tracker
 
+        Tracker result = trackers.get(trackers.size() - 1); //we should have at least one tracker
         for (Tracker tracker : trackers) {
             if (tracker.getName().equals(holder.getType())) {
                 result = tracker;
