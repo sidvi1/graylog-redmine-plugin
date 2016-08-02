@@ -35,20 +35,11 @@ public class StreamDataExtractor implements DataExtractor {
     public Map<String, Object> extract() {
         logger.debug("Exract data from stream {} with id {}", stream.getTitle(), stream.getId());
 
-        final AlertCondition alertCondition = result.getTriggeredCondition();
-        final List<MessageSummary> matchingMessages = result.getMatchingMessages();
-
-        String id = stream.getId();
-        int time = calculateTime(result);
-        String alertStart = Tools.getISO8601String(result.getTriggeredAt().minusMinutes(time));
-        String alertEnd = Tools.getISO8601String(result.getTriggeredAt());
-        String streamUrl = buildStreamDetailsURL(webInterfaceUri, id, alertStart, alertEnd);
-
-        AlarmBacklogExtractor backlog = new AlarmBacklogExtractor(alertCondition, matchingMessages);
+        AlarmBacklogExtractor backlog = new AlarmBacklogExtractor(result.getTriggeredCondition(), result.getMatchingMessages());
         Map<String, Object> result = new ModelBuilder()
                 .addStream(stream)
                 .addCheckResult(this.result)
-                .addStreamUrl(streamUrl)
+                .addStreamUrl(buildStreamDetailsURL())
                 .addBacklogMessages(backlog.extractMatchingMessages())
                 .build();
 
@@ -57,8 +48,14 @@ public class StreamDataExtractor implements DataExtractor {
         return result;
     }
 
-    private String buildStreamDetailsURL(URI baseUri, String streamId, String alertStart, String alertEnd) {
-        String result = baseUri + "/streams/" + streamId + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
+    private String buildStreamDetailsURL() {
+        String id = stream.getId();
+        int time = calculateTime(result);
+        String alertStart = Tools.getISO8601String(result.getTriggeredAt().minusMinutes(time));
+        String alertEnd = Tools.getISO8601String(result.getTriggeredAt());
+
+        String result = webInterfaceUri + "/streams/" + id + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
+
         logger.debug("Stream details uri is {}", result);
         return result;
     }
