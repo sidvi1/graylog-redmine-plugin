@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/sidvi1/graylog-redmine-plugin/badge.svg?branch=master)](https://coveralls.io/github/sidvi1/graylog-redmine-plugin?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/57a0748772d75c0051b3a1f6/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a0748772d75c0051b3a1f6)
 [![codebeat badge](https://codebeat.co/badges/b4d46f71-4589-40b9-a62d-cb8651bc6035)](https://codebeat.co/projects/github-com-sidvi1-graylog-redmine-plugin)
+[![Coverity Scan](https://scan.coverity.com/projects/9732/badge.svg)](https://scan.coverity.com/projects/graylog-redmine-plugin)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
 
 
