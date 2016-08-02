@@ -14,7 +14,7 @@ public class RedmineClientFactory {
 
     public RedmineClient create(String serverUrl, String apiKey) {
         RestApiClient client = new RestApiClient(serverUrl, apiKey);
-        logger.info("Redmine client for url {} and api key {} created", serverUrl, apiKey);
+        logger.debug("Redmine client for url {} and api key {} created", serverUrl, apiKey);
         return client;
     }
 }

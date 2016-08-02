@@ -25,7 +25,7 @@ class AlarmBacklogExtractor {
     }
 
     public List<Message> extractMatchingMessages() {
-        logger.info("Extract matching messages from backlog summaries");
+        logger.debug("Extract matching messages from backlog summaries");
         final int effectiveBacklogSize = Math.min(alertCondition.getBacklog(), matchingMessages.size());
 
         if (effectiveBacklogSize == 0) {
@@ -40,7 +40,7 @@ class AlarmBacklogExtractor {
             backlog.add(messageSummary.getRawMessage());
         }
 
-        logger.info("Backlog extracted message size is {}", backlog.size());
+        logger.debug("Backlog extracted message size is {}", backlog.size());
         return backlog;
     }
 }

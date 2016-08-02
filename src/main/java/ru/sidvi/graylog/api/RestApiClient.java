@@ -23,10 +23,10 @@ class RestApiClient implements RedmineClient {
     private ProjectManager projectManager;
 
     public RestApiClient(String serverUrl, String apiKey) {
-        logger.info("Creating RedmineManager for server url {} and api key {}", serverUrl, apiKey);
+        logger.debug("Creating RedmineManager for server url {} and api key {}", serverUrl, apiKey);
         HttpClient client = new DefaultHttpClient();
         RedmineManager manager = RedmineManagerFactory.createWithApiKey(serverUrl, apiKey, client);
-        logger.info("RedmineManager created");
+        logger.debug("RedmineManager created");
         issueManager = manager.getIssueManager();
         projectManager = manager.getProjectManager();
     }
@@ -34,7 +34,7 @@ class RestApiClient implements RedmineClient {
     @Override
     public boolean create(IssueDTO holder) {
         try {
-            logger.info("Try to create issue {}", holder);
+            logger.debug("Try to create issue {}", holder);
             Integer priority = getPriority(holder);
             Project project = getProjectByKey(holder.getProjectIdentifier());
             Tracker tracker = getTracker(holder);
@@ -52,25 +52,25 @@ class RestApiClient implements RedmineClient {
     public List<IssueDTO> getAll(String projectIdentifier) {
         List<IssueDTO> issueDTOs = new ArrayList<>();
         try {
-            logger.info("Try to load all issue from project {}", projectIdentifier);
+            logger.debug("Try to load all issue from project {}", projectIdentifier);
             issueDTOs = convert(issueManager.getIssues(projectIdentifier, null), projectIdentifier);
         } catch (RedmineException e) {
             logger.error("Exception while load all issues from project {}", projectIdentifier, e);
         }
-        logger.info("Load issues from project {}", projectIdentifier);
-        logger.info("{}", issueDTOs);
+        logger.debug("Load issues from project {}", projectIdentifier);
+        logger.debug("{}", issueDTOs);
         return issueDTOs;
     }
 
     private Project getProjectByKey(String projectIdentifier) throws RedmineException {
         Project project = projectManager.getProjectByKey(projectIdentifier);
-        logger.info("Found project {} by key {}", Utils.toString(project), projectIdentifier);
+        logger.debug("Found project {} by key {}", Utils.toString(project), projectIdentifier);
         return project;
     }
 
     private Integer getPriority(IssueDTO holder) throws RedmineException {
         List<IssuePriority> issuePriorities = Lists.reverse(issueManager.getIssuePriorities());
-        logger.info("Found issue priorities {}", issuePriorities);
+        logger.debug("Found issue priorities {}", issuePriorities);
 
         Integer result = issuePriorities.get(0).getId();
         for (IssuePriority p : issuePriorities) {
@@ -79,13 +79,13 @@ class RestApiClient implements RedmineClient {
             }
         }
 
-        logger.info("Selected priority is {}", result);
+        logger.debug("Selected priority is {}", result);
         return result;
     }
 
     private Tracker getTracker(IssueDTO holder) throws RedmineException {
         List<Tracker> trackers = Lists.reverse(issueManager.getTrackers());
-        logger.info("Found trackers {}", Utils.toString(trackers));
+        logger.debug("Found trackers {}", Utils.toString(trackers));
         Tracker result = trackers.get(trackers.size() - 1); //we should have at least one tracker
 
         for (Tracker tracker : trackers) {
@@ -94,7 +94,7 @@ class RestApiClient implements RedmineClient {
             }
         }
 
-        logger.info("Selected tracker is {}", Utils.toString(result));
+        logger.debug("Selected tracker is {}", Utils.toString(result));
         return result;
     }
 

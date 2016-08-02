@@ -25,20 +25,24 @@ public class Redmine {
     }
 
     public void saveIfNonExists(IssueDTO issue, String serverUrl, String apiKey) {
-        logger.info("Try to save issue: {}, {}, {}", issue, serverUrl, apiKey);
+        logger.info("Try to save issue {} to server {} with api key {}", issue, serverUrl, apiKey);
         RedmineClient client = factory.create(serverUrl, apiKey);
 
         String projectIdentifier = issue.getProjectIdentifier();
         List<IssueDTO> projectIssues = client.getAll(projectIdentifier);
-        logger.info("Loaded {] issues from project {}", projectIssues.size(), projectIdentifier);
+        logger.debug("Loaded {] issues from project {}", projectIssues.size(), projectIdentifier);
 
         boolean exists = isExists(issue, projectIssues);
-        logger.info("Issue {} already exists in project {}", issue, projectIdentifier);
+        logger.debug("Issue {} already exists in project {}", issue, projectIdentifier);
         if (!exists) {
             IssueDTO marked = marker.append(issue);
-            logger.info("Marked issue before send to Redmine server: {}", marked);
+            logger.debug("Marked issue before send to Redmine server: {}", marked);
             boolean isCreated = client.create(marked);
-            logger.info("Issue created: {}", isCreated);
+            if(isCreated){
+                logger.info("Issue created successfully");
+            }else{
+                logger.info("Issue not created");
+            }
         }
     }
 

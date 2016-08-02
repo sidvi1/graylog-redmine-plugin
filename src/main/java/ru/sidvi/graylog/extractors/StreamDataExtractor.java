@@ -33,7 +33,7 @@ public class StreamDataExtractor implements DataExtractor {
 
     @Override
     public Map<String, Object> extract() {
-        logger.info("Exract data from stream {} with id {}", stream.getTitle(), stream.getId());
+        logger.debug("Exract data from stream {} with id {}", stream.getTitle(), stream.getId());
 
         final AlertCondition alertCondition = result.getTriggeredCondition();
         final List<MessageSummary> matchingMessages = result.getMatchingMessages();
@@ -52,14 +52,14 @@ public class StreamDataExtractor implements DataExtractor {
                 .addBacklogMessages(backlog.extractMatchingMessages())
                 .build();
 
-        logger.info("Builded model. Model keys count {}", result.size());
+        logger.debug("Builded model. Model keys count {}", result.size());
 
         return result;
     }
 
     private String buildStreamDetailsURL(URI baseUri, String streamId, String alertStart, String alertEnd) {
         String result = baseUri + "/streams/" + streamId + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
-        logger.info("Stream details uri is {}", result);
+        logger.debug("Stream details uri is {}", result);
         return result;
     }
 
@@ -70,7 +70,7 @@ public class StreamDataExtractor implements DataExtractor {
             result = (int) parameters.get("time");
         }
 
-        logger.info("Time count to retrive messages is {}", result);
+        logger.debug("Time count to retrive messages is {}", result);
 
         return result;
     }

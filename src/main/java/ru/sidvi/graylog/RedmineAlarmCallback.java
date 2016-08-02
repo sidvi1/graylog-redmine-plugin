@@ -65,7 +65,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
 
         DataExtractor extractor = new StreamDataExtractor(stream, result, getBaseUri());
         Map<String, Object> values = extractor.extract();
-        logger.info("Values extracted from stream. Values count is {}", values.size());
+        logger.debug("Values extracted from stream. Values count is {}", values.size());
         IssueDTO issue = fillIssueFromForm(values);
 
         readmine.saveIfNonExists(issue, serverUrl, apiKey);
