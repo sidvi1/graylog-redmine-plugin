@@ -22,9 +22,8 @@ public class StreamDataExtractor implements DataExtractor {
 
     private final Stream stream;
     private final AlertCondition.CheckResult result;
-    private URI webInterfaceUri;
-
     private final Logger logger = LoggerFactory.getLogger(StreamDataExtractor.class);
+    private URI webInterfaceUri;
 
     public StreamDataExtractor(Stream stream, AlertCondition.CheckResult result, URI webInterfaceUri) {
         this.stream = stream;

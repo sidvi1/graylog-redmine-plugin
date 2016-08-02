@@ -1,7 +1,5 @@
 package ru.sidvi.graylog.template;
 
-import ru.sidvi.graylog.extractors.DataExtractor;
-
 import java.util.Map;
 
 /**

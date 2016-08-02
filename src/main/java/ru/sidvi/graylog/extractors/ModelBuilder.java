@@ -54,7 +54,7 @@ class ModelBuilder {
 
         public static final String BACKLOG_SIZE = "backlog_size";
         public static final String BACKLOG = "backlog";
-        public static final String ALERT_CONDITION = "alertCondition";
+        public static final String ALERT_CONDITION = "alert_condition";
         public static final String STREAM_URL = "stream_url";
         public static final String CHECK_RESULT = "check_result";
         public static final String STREAM = "stream";

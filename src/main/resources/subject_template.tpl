@@ -1,1 +1,1 @@
-Graylog alert for stream: ${stream.title}: ${check_result.resultDescription}
+Graylog alert for stream: ${stream.title}. Stream ID: ${stream.id}. Date: ${check_result.triggeredAt}

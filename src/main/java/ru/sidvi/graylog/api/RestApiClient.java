@@ -5,12 +5,9 @@ import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.IssueDTO;
-import uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +16,6 @@ import java.util.List;
  * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
  */
 class RestApiClient implements RedmineClient {
-    static {
-        SysOutOverSLF4J.sendSystemOutAndErrToSLF4J(); //need to bind System.err to slf4j
-    }
 
     private final Logger logger = LoggerFactory.getLogger(RestApiClient.class);
 

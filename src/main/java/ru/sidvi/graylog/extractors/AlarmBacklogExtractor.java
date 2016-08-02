@@ -15,10 +15,9 @@ import java.util.List;
  */
 class AlarmBacklogExtractor {
 
+    private final Logger logger = LoggerFactory.getLogger(AlarmBacklogExtractor.class);
     private AlertCondition alertCondition;
     private List<MessageSummary> matchingMessages;
-
-    private final Logger logger = LoggerFactory.getLogger(AlarmBacklogExtractor.class);
 
     public AlarmBacklogExtractor(AlertCondition alertCondition, List<MessageSummary> matchingMessages) {
         this.alertCondition = alertCondition;

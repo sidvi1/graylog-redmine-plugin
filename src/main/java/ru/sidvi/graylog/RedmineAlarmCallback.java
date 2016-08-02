@@ -1,7 +1,5 @@
 package ru.sidvi.graylog;
 
-import com.taskadapter.redmineapi.RedmineManager;
-import com.taskadapter.redmineapi.RedmineManagerFactory;
 import org.graylog2.configuration.EmailConfiguration;
 import org.graylog2.plugin.alarms.AlertCondition;
 import org.graylog2.plugin.alarms.callbacks.AlarmCallback;
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.extractors.DataExtractor;
 import ru.sidvi.graylog.extractors.StreamDataExtractor;
 import ru.sidvi.graylog.template.TemplateEngine;
-import uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J;
 
 import javax.inject.Inject;
 import java.net.URI;
@@ -130,7 +127,7 @@ public class RedmineAlarmCallback implements AlarmCallback {
                 ConfigurationField.Optional.OPTIONAL));
 
         configurationRequest.addField(new TextField(
-                PRIORITY, "Issue priority", "Minor", "Priority of the issue.",
+                PRIORITY, "Issue priority", "Low", "Priority of the issue.",
                 ConfigurationField.Optional.OPTIONAL));
 
 

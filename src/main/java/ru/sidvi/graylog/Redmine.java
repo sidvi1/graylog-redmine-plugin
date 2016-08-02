@@ -14,10 +14,9 @@ import java.util.List;
  */
 public class Redmine {
 
+    private final Logger logger = LoggerFactory.getLogger(Redmine.class);
     private UniqIssueMarker marker;
     private RedmineClientFactory factory;
-
-    private final Logger logger = LoggerFactory.getLogger(Redmine.class);
 
     @Inject
     public Redmine(UniqIssueMarker marker, RedmineClientFactory factory) {
