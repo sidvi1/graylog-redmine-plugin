@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/sidvi1/graylog-redmine-plugin.svg?branch=master)](https://travis-ci.org/sidvi1/graylog-redmine-plugin)
 [![Coverage Status](https://coveralls.io/repos/github/sidvi1/graylog-redmine-plugin/badge.svg?branch=master)](https://coveralls.io/github/sidvi1/graylog-redmine-plugin?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/57a0748772d75c0051b3a1f6/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a0748772d75c0051b3a1f6)
+[![codebeat badge](https://codebeat.co/badges/5f1222b7-c537-4ed9-89e7-85b09eaab33d)](https://codebeat.co/projects/github-com-hamster21-minion)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
 
 
