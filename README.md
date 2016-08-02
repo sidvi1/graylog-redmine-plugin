@@ -66,10 +66,14 @@ Available template parameters:
 
 Screenshots
 -----
+Plugin configuration form
+![Plugin configuration form](screenshot_form.png=400px)
 
-![Plugin configuration form](screenshot_form.png)
-![Sample alert configuration](screenshot_page.png)
-![Redmine task received from graylog](screenshot_redmine.png)
+Sample alert configuration
+![Sample alert configuration](screenshot_page.png=400px)
+
+Redmine task received from graylog
+![Redmine task received from graylog](screenshot_redmine.png=400px)
 
 Copiright
 ------
