@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/sidvi1/graylog-redmine-plugin.svg?branch=master)](https://travis-ci.org/sidvi1/graylog-redmine-plugin)
 [![Coverage Status](https://coveralls.io/repos/github/sidvi1/graylog-redmine-plugin/badge.svg?branch=master)](https://coveralls.io/github/sidvi1/graylog-redmine-plugin?branch=master)
+[![Dependency Status](https://www.versioneye.com/user/projects/57a0748772d75c0051b3a1f6/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57a0748772d75c0051b3a1f6)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
 
 
 Graylog alarm callback plugin for Redmine issue tracker.
@@ -10,6 +12,8 @@ Graylog alarm callback plugin for Redmine issue tracker.
 
 Installation
 ------------
+**NOTE: Currently this plugin conflict with graylog-map-widget-plugin and any other plugins bundle `org.apache.httpcomponents.httpclient`.
+Before install remove graylog-map-widget-plugin from `plugins` directory.**
 
 [Download the plugin](https://github.com/sidvi1/graylog-redmine-plugin/releases)
 and place the `.jar` file in your Graylog plugin directory. The plugin directory
@@ -25,7 +29,7 @@ As a template engine used [jmte](https://code.google.com/archive/p/jmte/wikis/Ge
 
 Example subject: 
 ```
-Graylog alert for stream: ${stream.title}: ${check_result.resultDescription}
+Graylog alert for stream: ${stream.title}. Stream ID: ${stream.id}. Date: ${check_result.triggeredAt}
 ```
 
 Example description:
@@ -36,10 +40,10 @@ Date: ${check_result.triggeredAt}
 Stream ID: ${stream.id}
 Stream title: ${stream.title}
 Stream description: ${stream.description}
-Alert Condition Title: ${alertCondition.title}
 ${if stream_url}Stream URL: ${stream_url}${end}
 
 Triggered condition: ${check_result.triggeredCondition}
+
 ##########
 ${if backlog}
 Last messages accounting for this alert:
@@ -49,7 +53,6 @@ ${end}
 ${else}
 <No backlog>
 ${end}
-;
 ```
 
 
@@ -57,14 +60,19 @@ Available template parameters:
 - stream
 - backlog
 - backlog_size
-- alert_condition
 - stream_url
 - check_result
+- alert_condition
 
 Screenshots
 -----
 
-![Graylog form](screenshot_form.png)
-![Redmine](screenshot_redmine.png)
+![Plugin configuration form](screenshot_form.png)
+![Sample alert configuration](screenshot_page.png)
+![Redmine task received from graylog](screenshot_redmine.png)
 
-
+Copiright
+------
+Plugin based on some code EmailAlarmCallback plugin.
+Inspired by [graylog-jira-alarmcallback](https://github.com/magicdude4eva/graylog-jira-alarmcallback)
+Copyright (c) 2016 Vitaly Sidorov. See LICENSE for further details.
