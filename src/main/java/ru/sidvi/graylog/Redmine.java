@@ -38,9 +38,9 @@ public class Redmine {
             IssueDTO marked = marker.append(issue);
             logger.debug("Marked issue before send to Redmine server: {}", marked);
             boolean isCreated = client.create(marked);
-            if(isCreated){
+            if (isCreated) {
                 logger.info("Issue created successfully");
-            }else{
+            } else {
                 logger.info("Issue not created");
             }
         }
