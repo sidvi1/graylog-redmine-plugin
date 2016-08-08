@@ -65,7 +65,7 @@
         <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
         <license-maven-plugin.version>2.11</license-maven-plugin.version>
         <rpm-maven-plugin.version>2.1.5</rpm-maven-plugin.version>
-        <jacoco-maven-plugin.version> 0.7.7.201606060606</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
         <coveralls-maven-plugin.version>4.2.0</coveralls-maven-plugin.version>
         <license-maven-plugin.owner>Vitaly Sidorov</license-maven-plugin.owner>
         <license-maven-plugin.email>mail@vitaly-sidorov.com</license-maven-plugin.email>
@@ -344,6 +344,16 @@
                         </mappings>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${coveralls-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -363,7 +373,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>prepare-agent</id>
@@ -376,7 +385,6 @@
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>${coveralls-maven-plugin.version}</version>
                         <configuration>
                             <repoToken>RQmBU1KqlhJkQ19q5flggxzVgmrHwLeYV</repoToken>
                         </configuration>
