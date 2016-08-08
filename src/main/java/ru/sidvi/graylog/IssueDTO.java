@@ -77,8 +77,12 @@ public class IssueDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         IssueDTO issueDTO = (IssueDTO) o;
         return Objects.equal(title, issueDTO.title) &&
                 Objects.equal(description, issueDTO.description) &&
