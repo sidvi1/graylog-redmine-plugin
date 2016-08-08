@@ -503,6 +503,7 @@
                             <targetJdk>${maven.compiler.target}</targetJdk>
                             <failOnViolation>false</failOnViolation>
                             <verbose>true</verbose>
+                            <linkXRef>false</linkXRef>
                         </configuration>
                     </plugin>
                     <plugin>
