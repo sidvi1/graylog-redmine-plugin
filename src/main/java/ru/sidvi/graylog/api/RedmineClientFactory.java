@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Creates client from parameters.
  *
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class RedmineClientFactory {
     private final Logger logger = LoggerFactory.getLogger(RedmineClientFactory.class);

@@ -3,7 +3,7 @@ package ru.sidvi.graylog;
 import com.google.common.base.Objects;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class IssueDTO {
 

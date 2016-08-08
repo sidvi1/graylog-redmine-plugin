@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 
 @RunWith(value = MockitoJUnitRunner.class)

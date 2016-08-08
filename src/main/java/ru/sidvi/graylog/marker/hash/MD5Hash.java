@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 @Singleton
 public class MD5Hash implements Hash {

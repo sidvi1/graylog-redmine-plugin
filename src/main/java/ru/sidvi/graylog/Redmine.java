@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class Redmine {
 

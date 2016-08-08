@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public final class Utils {
 

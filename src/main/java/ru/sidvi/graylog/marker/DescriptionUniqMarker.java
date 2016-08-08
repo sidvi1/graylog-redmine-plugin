@@ -6,7 +6,7 @@ import ru.sidvi.graylog.marker.hash.Hash;
 import javax.inject.Inject;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class DescriptionUniqMarker implements UniqIssueMarker {
     private Hash hash;

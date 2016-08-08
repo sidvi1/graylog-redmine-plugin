@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Extract data from Graylog stream based on alert condition.
  *
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class StreamDataExtractor implements DataExtractor {
 

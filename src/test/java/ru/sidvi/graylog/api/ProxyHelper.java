@@ -11,7 +11,7 @@ import ru.sidvi.graylog.IssueDTO;
 /**
  * This class used as helper, to record request to Redmine server.
  *
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 @Ignore
 public class ProxyHelper {

@@ -26,7 +26,7 @@ import static org.apache.commons.lang.StringUtils.defaultIfEmpty;
 import static ru.sidvi.graylog.Utils.fromResource;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class RedmineAlarmCallback implements AlarmCallback {
     private static final String BODY_TEMPLATE = fromResource("body_template.tpl");

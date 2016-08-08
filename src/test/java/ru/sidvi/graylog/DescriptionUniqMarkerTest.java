@@ -9,7 +9,7 @@ import ru.sidvi.graylog.marker.hash.MD5Hash;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class DescriptionUniqMarkerTest {
     private IssueDTO issue;

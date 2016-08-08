@@ -5,7 +5,7 @@ import ru.sidvi.graylog.IssueDTO;
 import java.util.List;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public interface RedmineClient {
 

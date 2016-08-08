@@ -21,7 +21,7 @@ import static org.mockserver.model.HttpResponse.response;
 import static ru.sidvi.graylog.Utils.fromResource;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class RestApiClientTest {
 

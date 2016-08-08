@@ -12,7 +12,7 @@ import java.util.Map;
 import static com.google.common.base.MoreObjects.firstNonNull;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 class ModelBuilder {
 
@@ -48,7 +48,7 @@ class ModelBuilder {
     /**
      * Holds keywords used in template.
      *
-     * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+     * @author Vitaly Sidorov mail@vitaly-sidorov.com
      */
     private static final class ModelKeys {
 

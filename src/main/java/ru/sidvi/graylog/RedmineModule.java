@@ -11,7 +11,7 @@ import ru.sidvi.graylog.template.TemplateEngine;
 
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class RedmineModule extends PluginModule {
 

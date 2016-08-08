@@ -3,7 +3,7 @@ package ru.sidvi.graylog.marker.hash;
 /**
  * Manage hash on strings.
  *
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public interface Hash {
     String BEGIN_MARKER = "\nMARKER>>\n";

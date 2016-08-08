@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 class AlarmBacklogExtractor {
 

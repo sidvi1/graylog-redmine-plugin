@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class RedmineMetaData implements PluginMetaData {
     @Override

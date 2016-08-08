@@ -5,7 +5,7 @@ import com.floreysoft.jmte.Engine;
 import java.util.Map;
 
 /**
- * @author Vitaly Sidorov <mail@vitaly-sidorov.com>
+ * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
 public class JMTEAdapter implements TemplateEngine {
 
