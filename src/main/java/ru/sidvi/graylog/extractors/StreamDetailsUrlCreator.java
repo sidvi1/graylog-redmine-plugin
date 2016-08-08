@@ -1,49 +1,35 @@
 package ru.sidvi.graylog.extractors;
 
 import org.graylog2.plugin.Tools;
-import org.graylog2.plugin.alarms.AlertCondition;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Vitaly Sidorov mail@vitaly-sidorov.com
  */
-public class StreamDetailsUrlCreator {
-    private static final int DEFAULT_TIME_COUNT = 5;
+class StreamDetailsUrlCreator {
     private final Logger logger = LoggerFactory.getLogger(StreamDetailsUrlCreator.class);
 
     private String baseUri;
     private String id;
-    private AlertCondition.CheckResult result;
+    private int minutesAgo;
+    private DateTime triggeredAt;
 
-    public StreamDetailsUrlCreator(String baseUri, String id, AlertCondition.CheckResult result) {
+    public StreamDetailsUrlCreator(String baseUri, String streamId, int minutesAgo, DateTime triggeredAt) {
         this.baseUri = baseUri;
-        this.id = id;
-        this.result = result;
+        this.id = streamId;
+        this.minutesAgo = minutesAgo;
+        this.triggeredAt = triggeredAt;
     }
 
     public String createUrl() {
-        return buildStreamDetailsURL();
-    }
+        String alertStart = Tools.getISO8601String(triggeredAt.minusMinutes(minutesAgo));
+        String alertEnd = Tools.getISO8601String(triggeredAt);
 
-    private String buildStreamDetailsURL() {
+        String result1 = baseUri + "/streams/" + id + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
 
-        int time = calculateTime(result.getTriggeredCondition().getParameters().get("time"));
-        String alertStart = Tools.getISO8601String(result.getTriggeredAt().minusMinutes(time));
-        String alertEnd = Tools.getISO8601String(result.getTriggeredAt());
-
-        String result = baseUri + "/streams/" + id + "/messages?rangetype=absolute&from=" + alertStart + "&to=" + alertEnd + "&q=*";
-
-        logger.debug("Stream details uri is {}", result);
-        return result;
-    }
-
-    private int calculateTime(Object timeParam) {
-        Integer result = DEFAULT_TIME_COUNT;
-        if (timeParam != null) {
-            result = (int) timeParam;
-        }
-        logger.debug("Time count to retrive messages is {}", result);
-        return result;
+        logger.debug("Stream details uri is {}", result1);
+        return result1;
     }
 }
