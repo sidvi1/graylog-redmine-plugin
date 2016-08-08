@@ -26,7 +26,7 @@ deploy:
     tags: true
     jdk: oraclejdk8
 install:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn install -DskipTests=true -Ptravis-coveralls -Dmaven.javadoc.skip=true -B -V
 script:
   - mvn test jacoco:report
 after_success:
