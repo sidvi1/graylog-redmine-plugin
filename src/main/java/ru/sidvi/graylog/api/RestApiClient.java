@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.taskadapter.redmineapi.*;
 import com.taskadapter.redmineapi.bean.*;
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sidvi.graylog.IssueDTO;
@@ -24,7 +24,7 @@ class RestApiClient implements RedmineClient {
 
     public RestApiClient(String serverUrl, String apiKey) {
         logger.debug("Creating RedmineManager for server url {} and api key {}", serverUrl, apiKey);
-        HttpClient client = new DefaultHttpClient();
+        HttpClient client = HttpClientBuilder.create().build();
         RedmineManager manager = RedmineManagerFactory.createWithApiKey(serverUrl, apiKey, client);
         logger.debug("RedmineManager created");
         issueManager = manager.getIssueManager();
@@ -123,7 +123,6 @@ class RestApiClient implements RedmineClient {
         i.setTracker(tracker);
         i.setPriorityId(priority);
         i.setDescription(holder.getDescription());
-        i.setProject(project);
         return i;
     }
 
