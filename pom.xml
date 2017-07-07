@@ -9,7 +9,7 @@
 
     <groupId>ru.sidvi.graylog</groupId>
     <artifactId>graylog-plugin-redmine</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -71,6 +71,7 @@
         <license-maven-plugin.email>mail@vitaly-sidorov.com</license-maven-plugin.email>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <jdeb.version>1.5</jdeb.version>
+        <httpcomponents.version>4.4.1</httpcomponents.version>
     </properties>
 
     <dependencyManagement>
@@ -164,7 +165,18 @@
             <groupId>com.taskadapter</groupId>
             <artifactId>redmine-java-api</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpcomponents.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>${httpcomponents.version}</version>
+            <type>jar</type>
+        </dependency>
         <!--test-->
         <dependency>
             <groupId>junit</groupId>
